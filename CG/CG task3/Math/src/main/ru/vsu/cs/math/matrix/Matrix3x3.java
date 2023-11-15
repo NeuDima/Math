@@ -52,6 +52,7 @@ public class Matrix3x3 implements IMatrix<Matrix3x3> {
         new Matrix3x3(arr);
     }
 
+    @Override
     public double getValue(int i, int j) {
         if (i > 2 || i < 0) {
             throw new ArithmeticException("wrong value for 'i'");
@@ -62,14 +63,17 @@ public class Matrix3x3 implements IMatrix<Matrix3x3> {
         return matrix[i][j];
     }
 
+    @Override
     public void setValue(int i, int j, double value) {
         matrix[i][j] = value;
     }
 
+    @Override
     public double[][] getArr() {
         return matrix;
     }
 
+    @Override
     public boolean equals(Matrix3x3 matrix) {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -81,6 +85,7 @@ public class Matrix3x3 implements IMatrix<Matrix3x3> {
         return true;
     }
 
+    @Override
     //creates an identity matrix
     public Matrix3x3 identityMatrix() {
         double[][] arr = new double[3][3];
@@ -94,6 +99,7 @@ public class Matrix3x3 implements IMatrix<Matrix3x3> {
         return new Matrix3x3(arr);
     }
 
+    @Override
     //addition matrix
     public Matrix3x3 add(Matrix3x3 matrix) {
         for (int i = 0; i < 3; i++) {
@@ -104,6 +110,7 @@ public class Matrix3x3 implements IMatrix<Matrix3x3> {
         return this;
     }
 
+    @Override
     //subtraction matrix
     public Matrix3x3 sub(Matrix3x3 matrix) {
         for (int i = 0; i < 3; i++) {
@@ -114,6 +121,7 @@ public class Matrix3x3 implements IMatrix<Matrix3x3> {
         return this;
     }
 
+    @Override
     public Matrix3x3 mulMatrix(Matrix3x3 matrix) {
         Matrix3x3 arrResult = new Matrix3x3();
 
@@ -139,6 +147,8 @@ public class Matrix3x3 implements IMatrix<Matrix3x3> {
         }
         return new Vector3f(arrResult[0][0], arrResult[1][0], arrResult[2][0]);
     }
+
+    @Override
     public double determinantMatrix() {
         double v1 = this.getValue(0, 0) * this.getValue(1, 1) * this.getValue(2, 2);
         double v2 = this.getValue(0, 1) * this.getValue(1, 2) * this.getValue(2, 0);
@@ -173,6 +183,7 @@ public class Matrix3x3 implements IMatrix<Matrix3x3> {
     }
 
     //transposition matrix
+    @Override
     public Matrix3x3 transposition() {
         Matrix3x3 arrTransposition = new Matrix3x3();
         for (int i = 0; i < 3; i++) {
@@ -183,6 +194,7 @@ public class Matrix3x3 implements IMatrix<Matrix3x3> {
         return arrTransposition;
     }
 
+    @Override
     public Matrix3x3 inverseMatrix() {
         double[][] arr = this.getArr();
         double delta = this.determinantMatrix();

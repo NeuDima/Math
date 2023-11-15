@@ -21,7 +21,7 @@ public class Matrix4x4 implements IMatrix<Matrix4x4> {
         matrix[2][0] = a31;
         matrix[2][1] = a32;
         matrix[2][2] = a33;
-        matrix[2][3] = a24;
+        matrix[2][3] = a34;
         matrix[3][0] = a41;
         matrix[3][1] = a42;
         matrix[3][2] = a43;
@@ -67,6 +67,7 @@ public class Matrix4x4 implements IMatrix<Matrix4x4> {
         new Matrix4x4(arr);
     }
 
+    @Override
     public double getValue(int i, int j) {
         if (i > 3 || i < 0) {
             throw new ArithmeticException("wrong value for 'i'");
@@ -77,14 +78,17 @@ public class Matrix4x4 implements IMatrix<Matrix4x4> {
         return matrix[i][j];
     }
 
+    @Override
     public void setValue(int i, int j, double value) {
         matrix[i][j] = value;
     }
 
+    @Override
     public double[][] getArr() {
         return matrix;
     }
 
+    @Override
     public boolean equals(Matrix4x4 matrix) {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
@@ -96,6 +100,7 @@ public class Matrix4x4 implements IMatrix<Matrix4x4> {
         return true;
     }
 
+    @Override
     //creates an identity matrix
     public Matrix4x4 identityMatrix() {
         double[][] arr = new double[4][4];
@@ -109,6 +114,7 @@ public class Matrix4x4 implements IMatrix<Matrix4x4> {
         return new Matrix4x4(arr);
     }
 
+    @Override
     //addition matrix
     public Matrix4x4 add(Matrix4x4 matrix) {
         for (int i = 0; i < 4; i++) {
@@ -119,6 +125,7 @@ public class Matrix4x4 implements IMatrix<Matrix4x4> {
         return this;
     }
 
+    @Override
     //subtraction matrix
     public Matrix4x4 sub(Matrix4x4 matrix) {
         for (int i = 0; i < 4; i++) {
@@ -129,6 +136,7 @@ public class Matrix4x4 implements IMatrix<Matrix4x4> {
         return this;
     }
 
+    @Override
     public Matrix4x4 mulMatrix(Matrix4x4 matrix) {
         Matrix4x4 arrResult = new Matrix4x4();
 
@@ -155,6 +163,7 @@ public class Matrix4x4 implements IMatrix<Matrix4x4> {
         return new Vector4f(arrResult[0][0], arrResult[1][0], arrResult[2][0], arrResult[3][0]);
     }
 
+    @Override
     public double determinantMatrix() {
         double[][] arr = this.getArr();
         return detMatrix(arr);
@@ -211,6 +220,7 @@ public class Matrix4x4 implements IMatrix<Matrix4x4> {
         return det;
     }
 
+    @Override
     //transposition matrix
     public Matrix4x4 transposition() {
         Matrix4x4 arrTransposition = new Matrix4x4();
@@ -222,6 +232,7 @@ public class Matrix4x4 implements IMatrix<Matrix4x4> {
         return arrTransposition;
     }
 
+    @Override
     public Matrix4x4 inverseMatrix() {
         double[][] arr = this.getArr();
         double delta = this.determinantMatrix3x3();
