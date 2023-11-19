@@ -1,9 +1,9 @@
 package test.ru.vsu.cs.math.matrix;
 
+import main.ru.vsu.cs.math.matrix.Matrix3x3;
 import main.ru.vsu.cs.math.vector.Vector3f;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import main.ru.vsu.cs.math.matrix.Matrix3x3;
 
 public class Matrix3x3Test {
     @Test
@@ -78,9 +78,30 @@ public class Matrix3x3Test {
 
     @Test
     void methodGauss() {
-        Matrix3x3 matrix1 = new Matrix3x3(3, 2, -5, 2, -1, 3, 1, 2, -1);
+        Matrix3x3 matrix1 = new Matrix3x3(
+                3, 2, -5,
+                2, -1, 3,
+                1, 2, -1);
         Vector3f vector3f = new Vector3f(-1, 13, 9);
         double[][] out = new double[][]{{3}, {5}, {4}};
+        double[][] out1 = matrix1.gaussMethod(vector3f);
+
+        for (int i = 0; i < 3; i++) {
+            Assertions.assertEquals(out[i][0], out1[i][0]);
+        }
+    }
+
+    @Test
+    void methodGauss_freeVariable() {
+        Matrix3x3 matrix1 = new Matrix3x3(
+                3, 2, -5,
+                2, -1, 3,
+                6, 4, -10);
+        Vector3f vector3f = new Vector3f(
+                10,
+                2,
+                4);
+        double[][] out = new double[][]{{2}, {2}, {0}};
         double[][] out1 = matrix1.gaussMethod(vector3f);
 
         for (int i = 0; i < 3; i++) {
