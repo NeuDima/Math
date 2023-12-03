@@ -15,18 +15,6 @@ public class Vector3f implements IVector<Vector3f>{
         return new double[][]{{x}, {y}, {z}};
     }
 
-    public double get(int num) {
-        if (num == 0) {
-            return x;
-        } else if (num == 1) {
-            return y;
-        } else if (num == 2) {
-            return z;
-        } else {
-            throw new ArithmeticException("Invalid item number");
-        }
-    }
-
     public double getX() {
         return x;
     }
@@ -39,7 +27,8 @@ public class Vector3f implements IVector<Vector3f>{
         return z;
     }
 
-    //addition vector
+    //addition
+    //vector change
     @Override
     public Vector3f add(Vector3f v) {
         this.x += v.x;
@@ -48,7 +37,16 @@ public class Vector3f implements IVector<Vector3f>{
         return this;
     }
 
-    //addition of vector and parameters
+    //addition
+    //no vector change
+    @Override
+    public Vector3f sum(Vector3f v) {
+        return new Vector3f(this.x + v.x, this.y + v.y, this.z + v.z);
+    }
+
+
+    //addition
+    //vector change
     public Vector3f add(double x, double y, double z) {
         this.x += x;
         this.y += y;
@@ -56,7 +54,14 @@ public class Vector3f implements IVector<Vector3f>{
         return this;
     }
 
-    //subtraction vector
+    //addition
+    //no vector change
+    public Vector3f sum(double x, double y, double z) {
+        return new Vector3f(this.x + x, this.y + y, this.z + z);
+    }
+
+    //subtraction
+    //vector change
     @Override
     public Vector3f sub(Vector3f v) {
         this.x -= v.x;
@@ -65,7 +70,15 @@ public class Vector3f implements IVector<Vector3f>{
         return this;
     }
 
-    //subtraction from the parameter vector
+    //subtraction
+    //no vector change
+    @Override
+    public Vector3f dif(Vector3f v) {
+        return new Vector3f(this.x - v.x, this.y - v.y, this.z - v.z);
+    }
+
+    //subtraction
+    //vector change
     public Vector3f sub(double x, double y, double z) {
         this.x -= x;
         this.y -= y;
@@ -73,7 +86,14 @@ public class Vector3f implements IVector<Vector3f>{
         return this;
     }
 
+    //subtraction
+    //no vector change
+    public Vector3f dif(double x, double y, double z) {
+        return new Vector3f(this.x - x, this.y - y, this.z - z);
+    }
+
     //multiplying vector by scalar
+    //vector change
     @Override
     public Vector3f mul(double scalar) {
         this.x *= scalar;
@@ -82,16 +102,40 @@ public class Vector3f implements IVector<Vector3f>{
         return this;
     }
 
+    //multiplying vector by scalar
+    //no vector change
+    @Override
+    public Vector3f prod(double scalar) {
+        double x = this.x * scalar;
+        double y = this.y * scalar;
+        double z = this.z * scalar;
+        return new Vector3f(x, y, z);
+    }
+
     //dividing vector by scalar
+    //vector change
     @Override
     public Vector3f div(double scalar) {
-        if (scalar < Math.pow(10, -9)) {
+        if (Math.abs(scalar) < 1e-14) {
             throw new ArithmeticException("You cant divide on 0");
         }
         this.x /= scalar;
         this.y /= scalar;
         this.z /= scalar;
         return this;
+    }
+
+    //dividing vector by scalar
+    //no vector change
+    @Override
+    public Vector3f div1(double scalar) {
+        if (Math.abs(scalar) < 1e-14) {
+            throw new ArithmeticException("You cant divide on 0");
+        }
+        double x = this.x / scalar;
+        double y = this.y / scalar;
+        double z = this.z / scalar;
+        return new Vector3f(x, y, z);
     }
 
     //vector length
@@ -104,10 +148,10 @@ public class Vector3f implements IVector<Vector3f>{
     @Override
     public Vector3f normalization() {
         double len = this.length();
-        if (len == 0) {
+        if (Math.abs(len) < 1e-14) {
             throw new ArithmeticException("This vector cannot be normalized because its length is zero");
         }
-        this.div(len);
+        this.div1(len);
         return this;
     }
 
@@ -125,6 +169,6 @@ public class Vector3f implements IVector<Vector3f>{
 
     @Override
     public boolean equals(Vector3f v) {
-        return this.x == v.x && this.y == v.y && this.z == v.z;
+        return (this.x - v.x) < 1e-14 && (this.y - v.y) < 1e-14 && (this.z - v.z) < 1e-14;
     }
 }

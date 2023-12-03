@@ -14,6 +14,14 @@ public class Vector2fTest {
     }
 
     @Test
+    void add1() {
+        Vector2f v1 = new Vector2f(1, 2);
+        Vector2f v2 = new Vector2f(4, 8);
+        Vector2f v = new Vector2f(5, 10);
+        Assertions.assertTrue(v.equals(v1.add(v2)));
+    }
+
+    @Test
     void add_params() {
         Vector2f v1 = new Vector2f(1, 2);
         double x = 3;
@@ -48,10 +56,26 @@ public class Vector2fTest {
     }
 
     @Test
+    void mulX() {
+        Vector2f v1 = new Vector2f(0.1, 0.2);
+        v1.mul(3).mul(3).add(new Vector2f(0.1, 0.2));
+        Vector2f v = new Vector2f(1, 2);
+        Assertions.assertTrue(v.equals(v1));
+    }
+
+    @Test
     void div_scalarNotEqualsZero() {
         Vector2f v1 = new Vector2f(6, 8);
         double scalar = 4;
         Vector2f v = new Vector2f(1.5, 2);
+        Assertions.assertTrue(v.equals(v1.div(scalar)));
+    }
+
+    @Test
+    void div_scalarNotEqualsZero2() {
+        Vector2f v1 = new Vector2f(6, 8);
+        double scalar = -4;
+        Vector2f v = new Vector2f(-1.5, -2);
         Assertions.assertTrue(v.equals(v1.div(scalar)));
     }
 

@@ -3,13 +3,15 @@ package main.ru.vsu.cs.math.matrix;
 import main.ru.vsu.cs.math.vector.Vector4f;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Matrix4x4 implements IMatrix<Matrix4x4> {
     private double[][] matrix = new double[4][4];
 
-    public Matrix4x4(double a11, double a12, double a13, double a14, double a21, double a22, double a23, double a24,
-                     double a31, double a32, double a33, double a34, double a41, double a42, double a43, double a44) {
+    public Matrix4x4(
+            double a11, double a12, double a13, double a14,
+            double a21, double a22, double a23, double a24,
+            double a31, double a32, double a33, double a34,
+            double a41, double a42, double a43, double a44) {
         matrix[0][0] = a11;
         matrix[0][1] = a12;
         matrix[0][2] = a13;
@@ -39,7 +41,7 @@ public class Matrix4x4 implements IMatrix<Matrix4x4> {
         this.matrix[1][0] = matrix[4];
         this.matrix[1][1] = matrix[5];
         this.matrix[1][2] = matrix[6];
-        this.matrix[1][4] = matrix[7];
+        this.matrix[1][3] = matrix[7];
         this.matrix[2][0] = matrix[8];
         this.matrix[2][1] = matrix[9];
         this.matrix[2][2] = matrix[10];
@@ -83,8 +85,7 @@ public class Matrix4x4 implements IMatrix<Matrix4x4> {
         matrix[i][j] = value;
     }
 
-    @Override
-    public double[][] getArr() {
+    private double[][] getArr() {
         return matrix;
     }
 
@@ -178,23 +179,12 @@ public class Matrix4x4 implements IMatrix<Matrix4x4> {
         } else {
             for (int i = 0; i < arr.length; i++) {
                 double[][] arrMatrix = matrixReduction(arr, i, 0);
-
                 double arrDeterminant = detMatrix(arrMatrix);
                 double minor = (arr[i][0] * Math.pow(-1, i) * arrDeterminant);
                 sum += minor;
             }
         }
         return sum;
-    }
-
-    private double determinantMatrix3x3() {
-        double v1 = this.getValue(0, 0) * this.getValue(1, 1) * this.getValue(2, 2);
-        double v2 = this.getValue(0, 1) * this.getValue(1, 2) * this.getValue(2, 0);
-        double v3 = this.getValue(0, 2) * this.getValue(1, 0) * this.getValue(2, 1);
-        double v4 = this.getValue(0, 2) * this.getValue(1, 1) * this.getValue(2, 0);
-        double v5 = this.getValue(0, 1) * this.getValue(1, 0) * this.getValue(2, 2);
-        double v6 = this.getValue(0, 0) * this.getValue(1, 2) * this.getValue(2, 1);
-        return v1 + v2 + v3 - v4 - v5 - v6;
     }
 
     //removes a given row and column from a matrix
@@ -235,7 +225,8 @@ public class Matrix4x4 implements IMatrix<Matrix4x4> {
     @Override
     public Matrix4x4 inverseMatrix() {
         double[][] arr = this.getArr();
-        double delta = this.determinantMatrix3x3();
+//        double delta = this.determinantMatrix3x3();
+        double delta = detMatrix(arr);
         if (delta == 0) {
             return null;
         }
@@ -278,14 +269,17 @@ public class Matrix4x4 implements IMatrix<Matrix4x4> {
 
             double[][] arrOut = new double[4][1];
             for (int i = listOut.size() - 1; i >= 0; i--) {
-                arrOut[3 - i][0] = listOut.get(i);
+                if (listOut.get(i) == -0) {
+                    arrOut[3 - i][0] = 0;
+                } else {
+                    arrOut[3 - i][0] = listOut.get(i);
+                }
             }
             return arrOut;
         } else {
             inputArr = movingNullLines(inputArr, nullLine, 0);
             double[][][] arr = solution(inputArr, nullLine.size());
             inputArr = arr[0];
-            System.out.println(Arrays.deepToString(arr));
 
             double[] arrX = arr[1][0];
 
@@ -298,13 +292,15 @@ public class Matrix4x4 implements IMatrix<Matrix4x4> {
             for (double x : arrX) {
                 listOut.add(x);
             }
-
-
         }
 
         double[][] arrOut = new double[4][1];
         for (int i = 0; i < arrOut.length; i++) {
-            arrOut[i][0] = listOut.get(i);
+            if (listOut.get(i) == -0) {
+                arrOut[i][0] = 0;
+            } else {
+                arrOut[i][0] = listOut.get(i);
+            }
         }
         return arrOut;
     }

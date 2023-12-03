@@ -12,7 +12,17 @@ public class Vector2f implements IVector<Vector2f> {
     public double[][] getVector() {
         return new double[][]{{x}, {y}};
     }
-    //addition vector
+
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    //addition
+    //vector change
     @Override
     public Vector2f add(Vector2f v) {
         this.x += v.x;
@@ -20,14 +30,29 @@ public class Vector2f implements IVector<Vector2f> {
         return this;
     }
 
-    //addition of vector and parameters
+    //addition
+    //no vector change
+    @Override
+    public Vector2f sum(Vector2f v) {
+        return new Vector2f(this.x + v.x, this.y + v.y);
+    }
+
+    //addition
+    //vector change
     public Vector2f add(double x, double y) {
         this.x += x;
         this.y += y;
         return this;
     }
 
-    //subtraction vector
+    //addition
+    //no vector change
+    public Vector2f sum(double x, double y) {
+        return new Vector2f(this.x + x, this.y + y);
+    }
+
+    //subtraction
+    //vector change
     @Override
     public Vector2f sub(Vector2f v) {
         this.x -= v.x;
@@ -35,14 +60,30 @@ public class Vector2f implements IVector<Vector2f> {
         return this;
     }
 
-    //subtraction from the parameter vector
+    //subtraction
+    //no vector change
+    @Override
+    public Vector2f dif(Vector2f v) {
+        return new Vector2f(this.x - v.x, this.y - v.y);
+    }
+
+    //subtraction
+    //vector change
     public Vector2f sub(double x, double y) {
         this.x -= x;
         this.y -= y;
         return this;
     }
 
+    //subtraction
+    //no vector change
+    public Vector2f dif(double x, double y) {
+        return new Vector2f(this.x - x, this.y - y);
+    }
+
+
     //multiplying vector by scalar
+    //vector change
     @Override
     public Vector2f mul(double scalar) {
         this.x *= scalar;
@@ -50,15 +91,37 @@ public class Vector2f implements IVector<Vector2f> {
         return this;
     }
 
+    //multiplying vector by scalar
+    //no vector change
+    @Override
+    public Vector2f prod(double scalar) {
+        double x = this.x * scalar;
+        double y = this.y * scalar;
+        return new Vector2f(x, y);
+    }
+
     //dividing vector by scalar
+    //vector change
     @Override
     public Vector2f div(double scalar) {
-        if (scalar < Math.pow(10, -9)) {
+        if (Math.abs(scalar) < 1e-14) {
             throw new ArithmeticException("You cant divide on 0");
         }
         this.x /= scalar;
         this.y /= scalar;
         return this;
+    }
+
+    //dividing vector by scalar
+    //no vector change
+    @Override
+    public Vector2f div1(double scalar) {
+        if (Math.abs(scalar) < 1e-14) {
+            throw new ArithmeticException("You cant divide on 0");
+        }
+        double x = this.x / scalar;
+        double y = this.y / scalar;
+        return new Vector2f(x, y);
     }
 
     //vector length
@@ -71,10 +134,10 @@ public class Vector2f implements IVector<Vector2f> {
     @Override
     public Vector2f normalization() {
         double len = this.length();
-        if (len == 0) {
+        if (len < 1e-14) {
             throw new ArithmeticException("This vector cannot be normalized because its length is zero");
         }
-        this.div(len);
+        this.div1(len);
         return this;
     }
 
@@ -85,6 +148,6 @@ public class Vector2f implements IVector<Vector2f> {
 
     @Override
     public boolean equals(Vector2f v) {
-        return this.x == v.x && this.y == v.y;
+        return (this.x - v.x) < 1e-14 && (this.y - v.y) < 1e-14;
     }
 }

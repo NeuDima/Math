@@ -3,12 +3,14 @@ package main.ru.vsu.cs.math.matrix;
 import main.ru.vsu.cs.math.vector.Vector3f;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Matrix3x3 implements IMatrix<Matrix3x3> {
     private double[][] matrix = new double[3][3];
 
-    public Matrix3x3(double a11, double a12, double a13, double a21, double a22, double a23, double a31, double a32, double a33) {
+    public Matrix3x3(
+            double a11, double a12, double a13,
+            double a21, double a22, double a23,
+            double a31, double a32, double a33) {
         matrix[0][0] = a11;
         matrix[0][1] = a12;
         matrix[0][2] = a13;
@@ -68,8 +70,7 @@ public class Matrix3x3 implements IMatrix<Matrix3x3> {
         matrix[i][j] = value;
     }
 
-    @Override
-    public double[][] getArr() {
+    private double[][] getArr() {
         return matrix;
     }
 
@@ -77,7 +78,7 @@ public class Matrix3x3 implements IMatrix<Matrix3x3> {
     public boolean equals(Matrix3x3 matrix) {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                if (this.getValue(i, j) != matrix.getValue(i, j)) {
+                if (Math.abs(this.getValue(i, j) - matrix.getValue(i, j)) < 1e-14) {
                     return false;
                 }
             }
@@ -251,7 +252,6 @@ public class Matrix3x3 implements IMatrix<Matrix3x3> {
             inputArr = movingNullLines(inputArr, nullLine, 0);
             double[][][] arr = solution(inputArr, nullLine.size());
             inputArr = arr[0];
-            System.out.println(Arrays.deepToString(arr));
 
             double[] arrX = arr[1][0];
 
@@ -264,8 +264,6 @@ public class Matrix3x3 implements IMatrix<Matrix3x3> {
             for (double x : arrX) {
                 listOut.add(x);
             }
-
-
         }
 
         double[][] arrOut = new double[3][1];

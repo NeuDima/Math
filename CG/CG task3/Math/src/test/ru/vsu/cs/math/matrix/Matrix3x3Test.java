@@ -17,6 +17,18 @@ public class Matrix3x3Test {
     }
 
     @Test
+    void zeroMatrix2() {
+        Matrix3x3 matrix1 = new Matrix3x3(
+                0, 0, 0,
+                0, 0, 0,
+                0, 0, 0);
+//        double[][] q = matrix1.getArr();
+//        q[0] = null;
+        Matrix3x3 matrix2 = new Matrix3x3();
+        Assertions.assertTrue(matrix1.equals(matrix2));
+    }
+
+    @Test
     void identityMatrix() {
         Matrix3x3 matrix1 = new Matrix3x3(
                 1, 0, 0,

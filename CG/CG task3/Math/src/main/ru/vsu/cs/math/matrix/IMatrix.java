@@ -5,7 +5,7 @@ public interface IMatrix<T extends IMatrix<T>> {
 
     void setValue(int i, int j, double value);
 
-    double[][] getArr();
+//    double[][] getArr();
 
     boolean equals(T matrix);
 
