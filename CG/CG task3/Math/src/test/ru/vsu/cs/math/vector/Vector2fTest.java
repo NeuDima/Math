@@ -11,6 +11,8 @@ public class Vector2fTest {
         Vector2f v2 = new Vector2f(4, 8);
         Vector2f v = new Vector2f(5, 10);
         Assertions.assertTrue(v.equals(v1.add(v2)));
+        Assertions.assertTrue(v1.equals(new Vector2f(1, 2)));
+        Assertions.assertTrue(v2.equals(new Vector2f(4, 8)));
     }
 
     @Test
@@ -58,9 +60,9 @@ public class Vector2fTest {
     @Test
     void mulX() {
         Vector2f v1 = new Vector2f(0.1, 0.2);
-        v1.mul(3).mul(3).add(new Vector2f(0.1, 0.2));
+        Vector2f v2 = v1.mul(3).mul(3).add(new Vector2f(0.1, 0.2));
         Vector2f v = new Vector2f(1, 2);
-        Assertions.assertTrue(v.equals(v1));
+        Assertions.assertTrue(v.equals(v2));
     }
 
     @Test
@@ -96,7 +98,12 @@ public class Vector2fTest {
     void normalization_vectorLengthNotEqualsZero() {
         Vector2f v1 = new Vector2f(6, 8);
         Vector2f v = new Vector2f(0.6, 0.8);
-        Assertions.assertTrue(v.equals(v1.normalization()));
+        Vector2f q = v1.normalization();
+        System.out.println(v1);
+        System.out.println(q);
+        System.out.println(v);
+        Assertions.assertTrue(v.equals(q));
+        Assertions.assertTrue(v1.equals(new Vector2f(6, 8)));
     }
 
     @Test

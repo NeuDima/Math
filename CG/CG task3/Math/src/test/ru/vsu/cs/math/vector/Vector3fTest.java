@@ -50,10 +50,26 @@ public class Vector3fTest {
     }
 
     @Test
+    void mulX() {
+        Vector3f v1 = new Vector3f(0.1, 0.2, 0.3);
+        Vector3f v2 = v1.mul(3).mul(3).add(new Vector3f(0.1, 0.2, 0.3));
+        Vector3f v = new Vector3f(1, 2, 3);
+        Assertions.assertTrue(v.equals(v2));
+    }
+
+    @Test
     void div_scalarNotEqualsZero() {
         Vector3f v1 = new Vector3f(1, 2, 5);
         double scalar = 4;
         Vector3f v = new Vector3f(0.25, 0.5, 1.25);
+        Assertions.assertTrue(v.equals(v1.div(scalar)));
+    }
+
+    @Test
+    void div_scalarNotEqualsZero2() {
+        Vector3f v1 = new Vector3f(1, 2, 5);
+        double scalar = -4;
+        Vector3f v = new Vector3f(-0.25, -0.5, -1.25);
         Assertions.assertTrue(v.equals(v1.div(scalar)));
     }
 

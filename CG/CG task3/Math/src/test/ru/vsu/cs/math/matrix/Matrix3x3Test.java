@@ -17,18 +17,6 @@ public class Matrix3x3Test {
     }
 
     @Test
-    void zeroMatrix2() {
-        Matrix3x3 matrix1 = new Matrix3x3(
-                0, 0, 0,
-                0, 0, 0,
-                0, 0, 0);
-//        double[][] q = matrix1.getArr();
-//        q[0] = null;
-        Matrix3x3 matrix2 = new Matrix3x3();
-        Assertions.assertTrue(matrix1.equals(matrix2));
-    }
-
-    @Test
     void identityMatrix() {
         Matrix3x3 matrix1 = new Matrix3x3(
                 1, 0, 0,
@@ -93,6 +81,24 @@ public class Matrix3x3Test {
     }
 
     @Test
+    void mulX() {
+        Matrix3x3 matrix1 = new Matrix3x3(
+                1, 4, 3,
+                2, 1, 5,
+                3, 2, 1);
+        Matrix3x3 matrix2 = new Matrix3x3(
+                5, 2, 1,
+                4, 3, 2,
+                2, 1, 5);
+        Matrix3x3 matrixResult = matrix2.mulMatrix(matrix1).mulMatrix(matrix1).add(matrix1);
+        Matrix3x3 matrix = new Matrix3x3(
+                139,  128, 185,
+                151, 146, 197,
+                108, 129, 169);
+        Assertions.assertTrue(matrix.equals(matrixResult));
+    }
+
+    @Test
     void mulVector() {
         Matrix3x3 matrix1 = new Matrix3x3(
                 2, 4, 0,
@@ -146,12 +152,27 @@ public class Matrix3x3Test {
                 2, -1, 3,
                 1, 2, -1);
         Vector3f vector3f = new Vector3f(-1, 13, 9);
-        double[][] out = new double[][]{{3}, {5}, {4}};
-        double[][] out1 = matrix1.gaussMethod(vector3f);
+        Vector3f vectorAnswer = new Vector3f(3, 5, 4);
+        Vector3f vectorAnswer1 = matrix1.gaussMethod(vector3f);
 
-        for (int i = 0; i < 3; i++) {
-            Assertions.assertEquals(out[i][0], out1[i][0]);
-        }
+        Assertions.assertEquals(vectorAnswer.getX(), vectorAnswer1.getX());
+        Assertions.assertEquals(vectorAnswer.getY(), vectorAnswer1.getY());
+        Assertions.assertEquals(vectorAnswer.getZ(), vectorAnswer1.getZ());
+    }
+
+    @Test
+    void methodGauss2() {
+        Matrix3x3 matrix1 = new Matrix3x3(
+                3, 2, -5,
+                0, 0, 0,
+                0, 0, 0);
+        Vector3f vector3f = new Vector3f(-1, 0, 0);
+        Vector3f vectorAnswer = new Vector3f(-1, 1, 0);
+        Vector3f vectorAnswer1 = matrix1.gaussMethod(vector3f);
+
+        Assertions.assertEquals(vectorAnswer.getX(), vectorAnswer1.getX());
+        Assertions.assertEquals(vectorAnswer.getY(), vectorAnswer1.getY());
+        Assertions.assertEquals(vectorAnswer.getZ(), vectorAnswer1.getZ());
     }
 
     @Test
@@ -164,11 +185,12 @@ public class Matrix3x3Test {
                 10,
                 2,
                 4);
-        double[][] out = new double[][]{{2}, {2}, {0}};
-        double[][] out1 = matrix1.gaussMethod(vector3f);
 
-        for (int i = 0; i < 3; i++) {
-            Assertions.assertEquals(out[i][0], out1[i][0]);
-        }
+        Vector3f vectorAnswer = new Vector3f(2, 2, 0);
+        Vector3f vectorAnswer1 = matrix1.gaussMethod(vector3f);
+
+        Assertions.assertEquals(vectorAnswer.getX(), vectorAnswer1.getX());
+        Assertions.assertEquals(vectorAnswer.getY(), vectorAnswer1.getY());
+        Assertions.assertEquals(vectorAnswer.getZ(), vectorAnswer1.getZ());
     }
 }

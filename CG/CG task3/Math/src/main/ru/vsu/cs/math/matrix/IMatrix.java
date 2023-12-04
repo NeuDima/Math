@@ -1,11 +1,11 @@
 package main.ru.vsu.cs.math.matrix;
 
-public interface IMatrix<T extends IMatrix<T>> {
+import main.ru.vsu.cs.math.vector.IVector;
+
+public interface IMatrix<T extends IMatrix<T, V>, V extends IVector<V>> {
     double getValue(int i, int j);
 
     void setValue(int i, int j, double value);
-
-//    double[][] getArr();
 
     boolean equals(T matrix);
 
@@ -22,4 +22,8 @@ public interface IMatrix<T extends IMatrix<T>> {
     T transposition();
 
     T inverseMatrix();
+
+    V mulVector(V vector);
+
+    V gaussMethod(V vector);
 }

@@ -91,6 +91,27 @@ public class Matrix4x4Test {
     }
 
     @Test
+    void product2() {
+        Matrix4x4 matrix1 = new Matrix4x4(
+                1, 2, 3, 4,
+                5, 6, 7, 8,
+                9, 10, 11, 12,
+                13, 14, 15, 16);
+        Matrix4x4 matrix2 = new Matrix4x4(
+                4, 5, 3, 1,
+                4, 5, 6, 9,
+                0, 5, 5, 5,
+                6, -7 ,8, 0);
+        Matrix4x4 matrixResult = matrix1.mulMatrix(matrix2).mulMatrix(matrix2).add(matrix2);
+        Matrix4x4 matrix = new Matrix4x4(
+                360, 267, 705, 365,
+                1072, 727, 1988, 1157,
+                1780, 1187, 3267, 1937,
+                2498, 1635, 4550, 2716);
+        Assertions.assertTrue(matrix.equals(matrixResult));
+    }
+
+    @Test
     void productVector() {
         Matrix4x4 matrix1 = new Matrix4x4(
                 1, 2, 3, 4,
@@ -155,11 +176,35 @@ public class Matrix4x4Test {
                 11,
                 40,
                 37);
-        double[][] out = new double[][]{{1}, {2}, {2}, {0}};
-        double[][] out1 = matrix1.gaussMethod(vector4f);
 
-        for (int i = 0; i < 4; i++) {
-            Assertions.assertEquals(out[i][0], out1[i][0]);
-        }
+        Vector4f vectorAnswer = new Vector4f(1, 2, 2, 0);
+        Vector4f vectorAnswer1 = matrix1.gaussMethod(vector4f);
+
+        Assertions.assertEquals(vectorAnswer.getX(), vectorAnswer1.getX());
+        Assertions.assertEquals(vectorAnswer.getY(), vectorAnswer1.getY());
+        Assertions.assertEquals(vectorAnswer.getZ(), vectorAnswer1.getZ());
+        Assertions.assertEquals(vectorAnswer.getW(), vectorAnswer1.getW());
+    }
+
+    @Test
+    void methodGauss2() {
+        Matrix4x4 matrix1 = new Matrix4x4(
+                2, 5, 4, 1,
+                0, 0, 0, 0,
+                0, 0, 0, 0,
+                0, 0, 0, 0);
+        Vector4f vector4f = new Vector4f(
+                24,
+                0,
+                0,
+                0);
+
+        Vector4f vectorAnswer = new Vector4f(5, 2, 1, 0);
+        Vector4f vectorAnswer1 = matrix1.gaussMethod(vector4f);
+
+        Assertions.assertEquals(vectorAnswer.getX(), vectorAnswer1.getX());
+        Assertions.assertEquals(vectorAnswer.getY(), vectorAnswer1.getY());
+        Assertions.assertEquals(vectorAnswer.getZ(), vectorAnswer1.getZ());
+        Assertions.assertEquals(vectorAnswer.getW(), vectorAnswer1.getW());
     }
 }

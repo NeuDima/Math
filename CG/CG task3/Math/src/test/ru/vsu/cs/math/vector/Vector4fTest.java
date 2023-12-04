@@ -52,6 +52,22 @@ public class Vector4fTest {
     }
 
     @Test
+    void mulX() {
+        Vector4f v1 = new Vector4f(0.1, 0.2, 0.3, -0.4);
+        Vector4f v2 = v1.mul(3).mul(3).add(new Vector4f(0.1, 0.2, 0.3, -0.4));
+        Vector4f v = new Vector4f(1, 2, 3, -4);
+        Assertions.assertTrue(v.equals(v2));
+    }
+
+    @Test
+    void div_scalarNotEqualsZero2() {
+        Vector4f v1 = new Vector4f(1, 2, 5, 8);
+        double scalar = -4;
+        Vector4f v = new Vector4f(-0.25, -0.5, -1.25, -2);
+        Assertions.assertTrue(v.equals(v1.div(scalar)));
+    }
+
+    @Test
     void div_scalarNotEqualsZero() {
         Vector4f v1 = new Vector4f(3, 6, 15, 12);
         double scalar = 3;

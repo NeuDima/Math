@@ -22,100 +22,38 @@ public class Vector2f implements IVector<Vector2f> {
     }
 
     //addition
-    //vector change
     @Override
     public Vector2f add(Vector2f v) {
-        this.x += v.x;
-        this.y += v.y;
-        return this;
-    }
-
-    //addition
-    //no vector change
-    @Override
-    public Vector2f sum(Vector2f v) {
         return new Vector2f(this.x + v.x, this.y + v.y);
     }
 
     //addition
-    //vector change
     public Vector2f add(double x, double y) {
-        this.x += x;
-        this.y += y;
-        return this;
-    }
-
-    //addition
-    //no vector change
-    public Vector2f sum(double x, double y) {
         return new Vector2f(this.x + x, this.y + y);
     }
 
     //subtraction
-    //vector change
     @Override
     public Vector2f sub(Vector2f v) {
-        this.x -= v.x;
-        this.y -= v.y;
-        return this;
-    }
-
-    //subtraction
-    //no vector change
-    @Override
-    public Vector2f dif(Vector2f v) {
         return new Vector2f(this.x - v.x, this.y - v.y);
     }
 
     //subtraction
-    //vector change
     public Vector2f sub(double x, double y) {
-        this.x -= x;
-        this.y -= y;
-        return this;
-    }
-
-    //subtraction
-    //no vector change
-    public Vector2f dif(double x, double y) {
         return new Vector2f(this.x - x, this.y - y);
     }
 
-
     //multiplying vector by scalar
-    //vector change
     @Override
     public Vector2f mul(double scalar) {
-        this.x *= scalar;
-        this.y *= scalar;
-        return this;
-    }
-
-    //multiplying vector by scalar
-    //no vector change
-    @Override
-    public Vector2f prod(double scalar) {
         double x = this.x * scalar;
         double y = this.y * scalar;
         return new Vector2f(x, y);
     }
 
     //dividing vector by scalar
-    //vector change
     @Override
     public Vector2f div(double scalar) {
-        if (Math.abs(scalar) < 1e-14) {
-            throw new ArithmeticException("You cant divide on 0");
-        }
-        this.x /= scalar;
-        this.y /= scalar;
-        return this;
-    }
-
-    //dividing vector by scalar
-    //no vector change
-    @Override
-    public Vector2f div1(double scalar) {
         if (Math.abs(scalar) < 1e-14) {
             throw new ArithmeticException("You cant divide on 0");
         }
@@ -137,8 +75,7 @@ public class Vector2f implements IVector<Vector2f> {
         if (len < 1e-14) {
             throw new ArithmeticException("This vector cannot be normalized because its length is zero");
         }
-        this.div1(len);
-        return this;
+        return this.div(len);
     }
 
     @Override
@@ -148,6 +85,14 @@ public class Vector2f implements IVector<Vector2f> {
 
     @Override
     public boolean equals(Vector2f v) {
-        return (this.x - v.x) < 1e-14 && (this.y - v.y) < 1e-14;
+        return Math.abs(this.x - v.x) < 1e-14 && Math.abs(this.y - v.y) < 1e-14;
+    }
+
+    @Override
+    public String toString() {
+        return "Vector2f{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
     }
 }
