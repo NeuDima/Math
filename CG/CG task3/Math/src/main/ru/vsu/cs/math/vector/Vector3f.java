@@ -20,46 +20,79 @@ public class Vector3f implements IVector<Vector3f>{
         this.z = arr[2];
     }
 
+    /*
+     * Получение вектора в виде массива столбца
+     */
     @Override
     public double[][] getVector() {
         return new double[][]{{x}, {y}, {z}};
     }
 
+    /*
+     * Получение значения "X"
+     */
     public double getX() {
         return x;
     }
 
+    /*
+     * Получение значения "Y"
+     */
     public double getY() {
         return y;
     }
+
+    /*
+     * Получение значения "Z"
+     */
 
     public double getZ() {
         return z;
     }
 
-    //addition
+    /*
+     * Сложение векторов
+     * Исходный вектор не изменяется
+     * Возвращается новый вектор
+     */
     @Override
     public Vector3f add(Vector3f v) {
         return new Vector3f(this.x + v.x, this.y + v.y, this.z + v.z);
     }
 
-    //addition
+    /*
+     * Сложение векторов
+     * Исходный вектор не изменяется
+     * Возвращается новый вектор
+     */
     public Vector3f add(double x, double y, double z) {
         return new Vector3f(this.x + x, this.y + y, this.z + z);
     }
 
-    //subtraction
+    /*
+     * Разница векторов
+     * Исходный вектор не изменяется
+     * Возвращается новый вектор
+     */
     @Override
     public Vector3f sub(Vector3f v) {
         return new Vector3f(this.x - v.x, this.y - v.y, this.z - v.z);
     }
 
-    //subtraction
+    /*
+     * Разница векторов
+     * Исходный вектор не изменяется
+     * Возвращается новый вектор
+     */
     public Vector3f sub(double x, double y, double z) {
         return new Vector3f(this.x - x, this.y - y, this.z - z);
     }
 
-    //multiplying vector by scalar
+    /*
+     * Произведение вектора на число
+     * Исходный вектор не изменяется
+     * Возвращается новый вектор
+     */
     @Override
     public Vector3f mul(double scalar) {
         double x = this.x * scalar;
@@ -68,7 +101,11 @@ public class Vector3f implements IVector<Vector3f>{
         return new Vector3f(x, y, z);
     }
 
-    //dividing vector by scalar
+    /*
+     * Деление вектора на число
+     * Исходный вектор не изменяется
+     * Возвращается новый вектор
+     */
     @Override
     public Vector3f div(double scalar) {
         if (Math.abs(scalar) < 1e-14) {
@@ -80,13 +117,17 @@ public class Vector3f implements IVector<Vector3f>{
         return new Vector3f(x, y, z);
     }
 
-    //vector length
+    /*
+     * Получение длины вектора
+     */
     @Override
     public double length() {
         return Math.sqrt(x * x + y * y + z * z);
     }
 
-    //vector normalization (length reduction to 1)
+    /*
+     * Нормализация вектора
+     */
     @Override
     public Vector3f normalization() {
         double len = this.length();
@@ -96,11 +137,17 @@ public class Vector3f implements IVector<Vector3f>{
         return this.div(len);
     }
 
+    /*
+     * Скалярное произведение векторов
+     */
     @Override
     public double dotProduct(Vector3f v) {
         return this.x * v.x + this.y * v.y + this.z * v.z;
     }
 
+    /*
+     * Векторное произведение
+     */
     public Vector3f vectorProduct(Vector3f v) {
         double x = this.y * v.z - this.z * v.y;
         double y = this.z * v.x - this.x * v.z;
@@ -108,6 +155,9 @@ public class Vector3f implements IVector<Vector3f>{
         return new Vector3f(x, y, z);
     }
 
+    /*
+     * Сравнение векторов
+     */
     @Override
     public boolean equals(Vector3f v) {
         return Math.abs(this.x - v.x) < 1e-14 && Math.abs(this.y - v.y) < 1e-14 &&

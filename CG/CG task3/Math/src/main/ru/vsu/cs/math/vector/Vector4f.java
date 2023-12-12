@@ -23,50 +23,85 @@ public class Vector4f implements IVector<Vector4f>{
         this.w = arr[3];
     }
 
+    /*
+     * Получение вектора в виде массива столбца
+     */
     @Override
     public double[][] getVector() {
         return new double[][]{{x}, {y}, {z}, {w}};
     }
 
+    /*
+     * Получение значения "X"
+     */
     public double getX() {
         return x;
     }
 
+    /*
+     * Получение значения "Y"
+     */
     public double getY() {
         return y;
     }
 
+    /*
+     * Получение значения "Z"
+     */
     public double getZ() {
         return z;
     }
 
+    /*
+     * Получение значения "W"
+     */
     public double getW() {
         return w;
     }
 
-    //addition
+    /*
+     * Сложение векторов
+     * Исходный вектор не изменяется
+     * Возвращается новый вектор
+     */
     @Override
     public Vector4f add(Vector4f v) {
         return new Vector4f(this.x + v.x, this.y + v.y, this.z + v.z, this.w + v.w);
     }
 
-    //addition
+    /*
+     * Сложение векторов
+     * Исходный вектор не изменяется
+     * Возвращается новый вектор
+     */
     public Vector4f add(double x, double y, double z, double w) {
         return new Vector4f(this.x + x, this.y + y, this.z + z, this.w + w);
     }
 
-    //subtraction
+    /*
+     * Разница векторов
+     * Исходный вектор не изменяется
+     * Возвращается новый вектор
+     */
     @Override
     public Vector4f sub(Vector4f v) {
         return new Vector4f(this.x - v.x, this.y - v.y, this.z - v.z, this.w - v.w);
     }
 
-    //subtraction
+    /*
+     * Разница векторов
+     * Исходный вектор не изменяется
+     * Возвращается новый вектор
+     */
     public Vector4f sub(double x, double y, double z, double w) {
         return new Vector4f(this.x - x, this.y - y, this.z - z, this.w - w);
     }
 
-    //multiplying vector by scalar
+    /*
+     * Произведение вектора на число
+     * Исходный вектор не изменяется
+     * Возвращается новый вектор
+     */
     @Override
     public Vector4f mul(double scalar) {
         double x = this.x * scalar;
@@ -76,7 +111,11 @@ public class Vector4f implements IVector<Vector4f>{
         return new Vector4f(x, y, z, w);
     }
 
-    //dividing vector by scalar
+    /*
+     * Деление вектора на число
+     * Исходный вектор не изменяется
+     * Возвращается новый вектор
+     */
     @Override
     public Vector4f div(double scalar) {
         if (Math.abs(scalar) < 1e-14) {
@@ -89,13 +128,17 @@ public class Vector4f implements IVector<Vector4f>{
         return new Vector4f(x, y, z, w);
     }
 
-    //vector length
+    /*
+     * Получение длины вектора
+     */
     @Override
     public double length() {
         return Math.sqrt(x * x + y * y + z * z + w * w);
     }
 
-    //vector normalization (length reduction to 1)
+    /*
+     * Нормализация вектора
+     */
     @Override
     public Vector4f normalization() {
         double len = this.length();
@@ -105,11 +148,17 @@ public class Vector4f implements IVector<Vector4f>{
         return this.div(len);
     }
 
+    /*
+     * Скалярное произведение векторов
+     */
     @Override
     public double dotProduct(Vector4f v) {
         return this.x * v.x + this.y * v.y + this.z * v.z + this.w * v.w;
     }
 
+    /*
+     * Скалярное произведение векторов
+     */
     @Override
     public boolean equals(Vector4f v) {
         return Math.abs(this.x - v.x) < 1e-14 && Math.abs(this.y - v.y) < 1e-14 &&

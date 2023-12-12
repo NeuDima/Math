@@ -48,12 +48,17 @@ public class Matrix3x3 implements IMatrix<Matrix3x3, Vector3f> {
         }
     }
 
-    //creates an empty matrix
+    /*
+     * Создание нулевой матрицы (все значения равны 0)
+     */
     public Matrix3x3 () {
         double[] arr = new double[9];
         new Matrix3x3(arr);
     }
 
+    /*
+     * Получение элемента матрицы по номеру строки(i) и столбца(j)
+     */
     @Override
     public double getValue(int i, int j) {
         if (i > 2 || i < 0) {
@@ -65,6 +70,9 @@ public class Matrix3x3 implements IMatrix<Matrix3x3, Vector3f> {
         return matrix[i][j];
     }
 
+    /*
+     * Замена элемента матрицы на новый(value) по номеру строки(i) и столбца(j)
+     */
     @Override
     public void setValue(int i, int j, double value) {
         matrix[i][j] = value;
@@ -74,6 +82,9 @@ public class Matrix3x3 implements IMatrix<Matrix3x3, Vector3f> {
         return matrix;
     }
 
+    /*
+     * Сравнение исходной матрицы с новой(matrix)
+     */
     @Override
     public boolean equals(Matrix3x3 matrix) {
         for (int i = 0; i < 3; i++) {
@@ -86,7 +97,9 @@ public class Matrix3x3 implements IMatrix<Matrix3x3, Vector3f> {
         return true;
     }
 
-    //creates an identity matrix
+    /*
+     * Создание единичной матрицы
+     */
     public static Matrix3x3 identityMatrix() {
         double[][] arr = new double[3][3];
         for (int i = 0; i < 3; i++) {
@@ -99,8 +112,11 @@ public class Matrix3x3 implements IMatrix<Matrix3x3, Vector3f> {
         return new Matrix3x3(arr);
     }
 
+    /*
+     * Сложение матриц
+     * Исходная матрица изменяется
+     */
     @Override
-    //addition matrix
     public Matrix3x3 add(Matrix3x3 matrix) {
         Matrix3x3 matrix3x3 = new Matrix3x3();
         for (int i = 0; i < 3; i++) {
@@ -112,8 +128,11 @@ public class Matrix3x3 implements IMatrix<Matrix3x3, Vector3f> {
         return matrix3x3;
     }
 
+    /*
+     * Вычитание матрицы из исходной
+     * Исходная матрица изменяется
+     */
     @Override
-    //subtraction matrix
     public Matrix3x3 sub(Matrix3x3 matrix) {
         Matrix3x3 matrix3x3 = new Matrix3x3();
         for (int i = 0; i < 3; i++) {
@@ -125,6 +144,11 @@ public class Matrix3x3 implements IMatrix<Matrix3x3, Vector3f> {
         return matrix3x3;
     }
 
+    /*
+     * Произведение матриц
+     * Исходная матрица не изменяется
+     * Возвращается новая матрица
+     */
     @Override
     public Matrix3x3 mulMatrix(Matrix3x3 matrix) {
         Matrix3x3 arrResult = new Matrix3x3();
@@ -140,17 +164,25 @@ public class Matrix3x3 implements IMatrix<Matrix3x3, Vector3f> {
         return arrResult;
     }
 
+    /*
+     * Произведение матрицы на вектор
+     * Исходная матрица не изменяется
+     * Возвращается новый вектор
+     */
     @Override
     public Vector3f mulVector(Vector3f vector) {
-        double[][] arrResult = new double[3][1];
+        double[] arrResult = new double[3];
         for (int i = 0; i < 3; i++) {
             for (int k = 0; k < 3; k++) {
-                arrResult[i][0] += this.getValue(i, k) * vector.getVector()[k][0];
+                arrResult[i] += this.getValue(i, k) * vector.getVector()[k][0];
             }
         }
-        return new Vector3f(arrResult[0][0], arrResult[1][0], arrResult[2][0]);
+        return new Vector3f(arrResult[0], arrResult[1], arrResult[2]);
     }
 
+    /*
+     * Детерминант матрицы
+     */
     @Override
     public double determinantMatrix() {
         double v1 = this.getValue(0, 0) * this.getValue(1, 1) * this.getValue(2, 2);
@@ -162,30 +194,10 @@ public class Matrix3x3 implements IMatrix<Matrix3x3, Vector3f> {
         return v1 + v2 + v3 - v4 - v5 - v6;
     }
 
-    //removes a given row and column from a matrix
-    private double[][] matrixReduction(double[][] arr, int row, int col) {
-        int countRow = 0, countCol = 0;
-        int len = arr.length;
-        double[][] det = new double[len - 1][len - 1];
-
-        for (int i = 0; i < len; i++) {
-            if (i == row) {
-                countRow++;
-                continue;
-            }
-            for (int j = 0; j < len; j++) {
-                if (j == col) {
-                    countCol++;
-                    continue;
-                }
-                det[i - countRow][j - countCol] = arr[i][j];
-            }
-            countCol--;
-        }
-        return det;
-    }
-
-    //transposition matrix
+    /*
+     * Транспонирование матрицы
+     * Исходная матрица не изменяется
+     */
     @Override
     public Matrix3x3 transposition() {
         Matrix3x3 arrTransposition = new Matrix3x3();
@@ -197,6 +209,10 @@ public class Matrix3x3 implements IMatrix<Matrix3x3, Vector3f> {
         return arrTransposition;
     }
 
+    /*
+     * Получение обратной матрицы
+     * Исходная матрица не изменяется
+     */
     @Override
     public Matrix3x3 inverseMatrix() {
         double[][] arr = this.getArr();
@@ -208,17 +224,18 @@ public class Matrix3x3 implements IMatrix<Matrix3x3, Vector3f> {
         double[][] arrInverse = new double[arr.length][arr.length];
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr.length; j++) {
-                double[][] arrReduction = matrixReduction(arrTrans.getArr(), i, j);
-                arrInverse[i][j] = Math.pow(-1, i + j) * determinantMatrix2x2(arrReduction) / delta;
+                double[][] arrReduction = Search.matrixReduction(arrTrans.getArr(), i, j);
+                arrInverse[i][j] = Math.pow(-1, i + j) * Search.detMatrix(arrReduction) / delta;
             }
         }
         return new Matrix3x3(arrInverse);
     }
 
-    private double determinantMatrix2x2 (double[][] arr) {
-        return arr[0][0] * arr[1][1] - arr[1][0] * arr[0][1];
-    }
-
+    /*
+     * Получение корней системы с помощью метода Гаусса
+     * На вход нужен вектор правой части системы
+     * Исходная матрица не изменяется
+     */
     @Override
     public Vector3f gaussMethod(Vector3f vector) {
         double[][] inputArr = new double[3][4];

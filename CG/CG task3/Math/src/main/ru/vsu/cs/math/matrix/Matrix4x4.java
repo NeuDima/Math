@@ -64,12 +64,17 @@ public class Matrix4x4 implements IMatrix<Matrix4x4, Vector4f> {
         //this.matrix = matrix;
     }
 
-    //creates an empty matrix
+    /*
+     * Создание нулевой матрицы (все значения равны 0)
+     */
     public Matrix4x4() {
         double[] arr = new double[16];
         new Matrix4x4(arr);
     }
 
+    /*
+     * Получение элемента матрицы по номеру строки(i) и столбца(j)
+     */
     @Override
     public double getValue(int i, int j) {
         if (i > 3 || i < 0) {
@@ -81,6 +86,9 @@ public class Matrix4x4 implements IMatrix<Matrix4x4, Vector4f> {
         return matrix[i][j];
     }
 
+    /*
+     * Замена элемента матрицы на новый(value) по номеру строки(i) и столбца(j)
+     */
     @Override
     public void setValue(int i, int j, double value) {
         matrix[i][j] = value;
@@ -90,6 +98,9 @@ public class Matrix4x4 implements IMatrix<Matrix4x4, Vector4f> {
         return matrix;
     }
 
+    /*
+     * Сравнение исходной матрицы с новой(matrix)
+     */
     @Override
     public boolean equals(Matrix4x4 matrix) {
         for (int i = 0; i < 4; i++) {
@@ -102,7 +113,9 @@ public class Matrix4x4 implements IMatrix<Matrix4x4, Vector4f> {
         return true;
     }
 
-    //creates an identity matrix
+    /*
+     * Создание единичной матрицы
+     */
     public static Matrix4x4 identityMatrix() {
         double[][] arr = new double[4][4];
         for (int i = 0; i < 4; i++) {
@@ -115,8 +128,11 @@ public class Matrix4x4 implements IMatrix<Matrix4x4, Vector4f> {
         return new Matrix4x4(arr);
     }
 
+    /*
+     * Сложение матриц
+     * Исходная матрица изменяется
+     */
     @Override
-    //addition matrix
     public Matrix4x4 add(Matrix4x4 matrix) {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
@@ -126,8 +142,11 @@ public class Matrix4x4 implements IMatrix<Matrix4x4, Vector4f> {
         return this;
     }
 
+    /*
+     * Вычитание матрицы из исходной
+     * Исходная матрица изменяется
+     */
     @Override
-    //subtraction matrix
     public Matrix4x4 sub(Matrix4x4 matrix) {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
@@ -137,6 +156,11 @@ public class Matrix4x4 implements IMatrix<Matrix4x4, Vector4f> {
         return this;
     }
 
+    /*
+     * Произведение матриц
+     * Исходная матрица не изменяется
+     * Возвращается новая матрица
+     */
     @Override
     public Matrix4x4 mulMatrix(Matrix4x4 matrix) {
         Matrix4x4 arrResult = new Matrix4x4();
@@ -153,10 +177,14 @@ public class Matrix4x4 implements IMatrix<Matrix4x4, Vector4f> {
         return arrResult;
     }
 
+    /*
+     * Произведение матрицы на вектор
+     * Исходная матрица не изменяется
+     * Возвращается новый вектор
+     */
     @Override
     public Vector4f mulVector(Vector4f vector) {
         double[][] arrResult = new double[4][1];
-
         for (int i = 0; i < 4; i++) {
             for (int k = 0; k < 4; k++) {
                 arrResult[i][0] += this.getValue(i, k) * vector.getVector()[k][0];
@@ -165,54 +193,20 @@ public class Matrix4x4 implements IMatrix<Matrix4x4, Vector4f> {
         return new Vector4f(arrResult[0][0], arrResult[1][0], arrResult[2][0], arrResult[3][0]);
     }
 
+    /*
+     * Детерминант матрицы
+     */
     @Override
     public double determinantMatrix() {
         double[][] arr = this.getArr();
-        return detMatrix(arr);
+        return Search.detMatrix(arr);
     }
 
-    private double detMatrix(double[][] arr) {
-        double sum = 0;
-        if (arr.length == 1) {
-            return arr[0][0];
-        } else if (arr.length == 2) {
-            return arr[0][0] * arr[1][1] - arr[1][0] * arr[0][1];
-        } else {
-            for (int i = 0; i < arr.length; i++) {
-                double[][] arrMatrix = matrixReduction(arr, i, 0);
-                double arrDeterminant = detMatrix(arrMatrix);
-                double minor = (arr[i][0] * Math.pow(-1, i) * arrDeterminant);
-                sum += minor;
-            }
-        }
-        return sum;
-    }
-
-    //removes a given row and column from a matrix
-    private double[][] matrixReduction(double[][] arr, int row, int col) {
-        int countRow = 0, countCol = 0;
-        int len = arr.length;
-        double[][] det = new double[len - 1][len - 1];
-
-        for (int i = 0; i < len; i++) {
-            if (i == row) {
-                countRow++;
-                continue;
-            }
-            for (int j = 0; j < len; j++) {
-                if (j == col) {
-                    countCol++;
-                    continue;
-                }
-                det[i - countRow][j - countCol] = arr[i][j];
-            }
-            countCol--;
-        }
-        return det;
-    }
-
+    /*
+     * Транспонирование матрицы
+     * Исходная матрица не изменяется
+     */
     @Override
-    //transposition matrix
     public Matrix4x4 transposition() {
         Matrix4x4 arrTransposition = new Matrix4x4();
         for (int i = 0; i < 4; i++) {
@@ -223,11 +217,14 @@ public class Matrix4x4 implements IMatrix<Matrix4x4, Vector4f> {
         return arrTransposition;
     }
 
+    /*
+     * Получение обратной матрицы
+     * Исходная матрица не изменяется
+     */
     @Override
     public Matrix4x4 inverseMatrix() {
         double[][] arr = this.getArr();
-//        double delta = this.determinantMatrix3x3();
-        double delta = detMatrix(arr);
+        double delta = Search.detMatrix(arr);
         if (delta == 0) {
             return null;
         }
@@ -235,13 +232,18 @@ public class Matrix4x4 implements IMatrix<Matrix4x4, Vector4f> {
         double[][] arrInverse = new double[arr.length][arr.length];
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr.length; j++) {
-                double[][] arrReduction = matrixReduction(arrTrans.getArr(), i, j);
-                arrInverse[i][j] = Math.pow(-1, i + j) * detMatrix(arrReduction) / delta;
+                double[][] arrReduction = Search.matrixReduction(arrTrans.getArr(), i, j);
+                arrInverse[i][j] = Math.pow(-1, i + j) * Search.detMatrix(arrReduction) / delta;
             }
         }
         return new Matrix4x4(arrInverse);
     }
 
+    /*
+     * Получение корней системы с помощью метода Гаусса
+     * На вход нужен вектор правой части системы
+     * Исходная матрица не изменяется
+     */
     @Override
     public Vector4f gaussMethod(Vector4f vector) {
         double[][] inputArr = new double[4][5];

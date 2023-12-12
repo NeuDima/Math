@@ -17,42 +17,71 @@ public class Vector2f implements IVector<Vector2f> {
         this.y = arr[1];
     }
 
+    /*
+     * Получение вектора в виде массива столбца
+     */
     @Override
     public double[][] getVector() {
         return new double[][]{{x}, {y}};
     }
 
+    /*
+     * Получение значения "X"
+     */
     public double getX() {
         return x;
     }
 
+    /*
+     * Получение значения "Y"
+     */
     public double getY() {
         return y;
     }
 
-    //addition
+    /*
+     * Сложение векторов
+     * Исходный вектор не изменяется
+     * Возвращается новый вектор
+     */
     @Override
     public Vector2f add(Vector2f v) {
         return new Vector2f(this.x + v.x, this.y + v.y);
     }
 
-    //addition
+    /*
+     * Сложение векторов
+     * Исходный вектор не изменяется
+     * Возвращается новый вектор
+     */
     public Vector2f add(double x, double y) {
         return new Vector2f(this.x + x, this.y + y);
     }
 
-    //subtraction
+    /*
+     * Разница векторов
+     * Исходный вектор не изменяется
+     * Возвращается новый вектор
+     */
     @Override
     public Vector2f sub(Vector2f v) {
         return new Vector2f(this.x - v.x, this.y - v.y);
     }
 
-    //subtraction
+    /*
+     * Разница векторов
+     * Исходный вектор не изменяется
+     * Возвращается новый вектор
+     */
     public Vector2f sub(double x, double y) {
         return new Vector2f(this.x - x, this.y - y);
     }
 
-    //multiplying vector by scalar
+    /*
+     * Произведение вектора на число
+     * Исходный вектор не изменяется
+     * Возвращается новый вектор
+     */
     @Override
     public Vector2f mul(double scalar) {
         double x = this.x * scalar;
@@ -60,7 +89,11 @@ public class Vector2f implements IVector<Vector2f> {
         return new Vector2f(x, y);
     }
 
-    //dividing vector by scalar
+    /*
+     * Деление вектора на число
+     * Исходный вектор не изменяется
+     * Возвращается новый вектор
+     */
     @Override
     public Vector2f div(double scalar) {
         if (Math.abs(scalar) < 1e-14) {
@@ -71,13 +104,17 @@ public class Vector2f implements IVector<Vector2f> {
         return new Vector2f(x, y);
     }
 
-    //vector length
+    /*
+     * Получение длины вектора
+     */
     @Override
     public double length() {
         return Math.sqrt(x * x + y * y);
     }
 
-    //vector normalization (length reduction to 1)
+    /*
+     * Нормализация вектора
+     */
     @Override
     public Vector2f normalization() {
         double len = this.length();
@@ -87,11 +124,17 @@ public class Vector2f implements IVector<Vector2f> {
         return this.div(len);
     }
 
+    /*
+     * Скалярное произведение векторов
+     */
     @Override
     public double dotProduct(Vector2f v) {
         return this.x * v.x + this.y * v.y;
     }
 
+    /*
+     * Сравнение векторов
+     */
     @Override
     public boolean equals(Vector2f v) {
         return Math.abs(this.x - v.x) < 1e-14 && Math.abs(this.y - v.y) < 1e-14;
