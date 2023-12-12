@@ -1,7 +1,6 @@
 package main.ru.vsu.cs.math.vector;
 
 public interface IVector<T extends IVector<T>> {
-
     T add(T vector);
 
     T sub(T vector);
@@ -19,4 +18,6 @@ public interface IVector<T extends IVector<T>> {
     boolean equals(T vector);
 
     String toString();
+
+    double[][] getVector();
 }

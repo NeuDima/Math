@@ -102,9 +102,8 @@ public class Matrix4x4 implements IMatrix<Matrix4x4, Vector4f> {
         return true;
     }
 
-    @Override
     //creates an identity matrix
-    public Matrix4x4 identityMatrix() {
+    public static Matrix4x4 identityMatrix() {
         double[][] arr = new double[4][4];
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {

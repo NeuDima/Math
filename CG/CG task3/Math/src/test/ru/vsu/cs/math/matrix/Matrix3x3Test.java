@@ -22,7 +22,7 @@ public class Matrix3x3Test {
                 1, 0, 0,
                 0, 1, 0,
                 0, 0, 1);
-        Matrix3x3 matrix2 = new Matrix3x3().identityMatrix();
+        Matrix3x3 matrix2 = Matrix3x3.identityMatrix();
         Assertions.assertTrue(matrix1.equals(matrix2));
     }
 

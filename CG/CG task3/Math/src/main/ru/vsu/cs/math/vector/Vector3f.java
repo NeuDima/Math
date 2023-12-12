@@ -11,6 +11,16 @@ public class Vector3f implements IVector<Vector3f>{
         this.z = z;
     }
 
+    public Vector3f(double[] arr) {
+        if (arr.length != 3) {
+            throw new ArithmeticException("Wrong array length to create vector");
+        }
+        this.x = arr[0];
+        this.y = arr[1];
+        this.z = arr[2];
+    }
+
+    @Override
     public double[][] getVector() {
         return new double[][]{{x}, {y}, {z}};
     }

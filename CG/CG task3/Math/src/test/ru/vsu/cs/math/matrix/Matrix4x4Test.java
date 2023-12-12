@@ -24,7 +24,7 @@ public class Matrix4x4Test {
                 0, 1, 0, 0,
                 0, 0, 1, 0,
                 0, 0, 0, 1);
-        Matrix4x4 matrix2 = new Matrix4x4().identityMatrix();
+        Matrix4x4 matrix2 = Matrix4x4.identityMatrix();
         Assertions.assertTrue(matrix1.equals(matrix2));
     }
 

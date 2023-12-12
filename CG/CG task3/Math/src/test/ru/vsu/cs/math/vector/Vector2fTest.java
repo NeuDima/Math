@@ -99,9 +99,6 @@ public class Vector2fTest {
         Vector2f v1 = new Vector2f(6, 8);
         Vector2f v = new Vector2f(0.6, 0.8);
         Vector2f q = v1.normalization();
-        System.out.println(v1);
-        System.out.println(q);
-        System.out.println(v);
         Assertions.assertTrue(v.equals(q));
         Assertions.assertTrue(v1.equals(new Vector2f(6, 8)));
     }

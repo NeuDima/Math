@@ -13,6 +13,17 @@ public class Vector4f implements IVector<Vector4f>{
         this.w = w;
     }
 
+    public Vector4f(double[] arr) {
+        if (arr.length != 4) {
+            throw new ArithmeticException("Wrong array length to create vector");
+        }
+        this.x = arr[0];
+        this.y = arr[1];
+        this.z = arr[2];
+        this.w = arr[3];
+    }
+
+    @Override
     public double[][] getVector() {
         return new double[][]{{x}, {y}, {z}, {w}};
     }

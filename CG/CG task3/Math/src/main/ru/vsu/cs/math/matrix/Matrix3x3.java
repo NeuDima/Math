@@ -46,11 +46,10 @@ public class Matrix3x3 implements IMatrix<Matrix3x3, Vector3f> {
         for (int i = 0; i < 3; i++) {
             System.arraycopy(matrix[i], 0, this.matrix[i], 0, 3);
         }
-        //this.matrix = matrix;
     }
 
     //creates an empty matrix
-    public Matrix3x3() {
+    public Matrix3x3 () {
         double[] arr = new double[9];
         new Matrix3x3(arr);
     }
@@ -87,9 +86,8 @@ public class Matrix3x3 implements IMatrix<Matrix3x3, Vector3f> {
         return true;
     }
 
-    @Override
     //creates an identity matrix
-    public Matrix3x3 identityMatrix() {
+    public static Matrix3x3 identityMatrix() {
         double[][] arr = new double[3][3];
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {

@@ -9,8 +9,6 @@ public interface IMatrix<T extends IMatrix<T, V>, V extends IVector<V>> {
 
     boolean equals(T matrix);
 
-    T identityMatrix();
-
     T add(T matrix);
 
     T sub(T matrix);
