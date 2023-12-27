@@ -16,9 +16,9 @@ public class Vector3fTest {
     @Test
     void add_params() {
         Vector3f v1 = new Vector3f(1, 2, 8);
-        double x = 3;
-        double y = 7;
-        double z = 2;
+        float x = 3;
+        float y = 7;
+        float z = 2;
         Vector3f v = new Vector3f(4, 9, 10);
         Assertions.assertTrue(v.equals(v1.add(x, y, z)));
     }
@@ -34,9 +34,9 @@ public class Vector3fTest {
     @Test
     void sub_params() {
         Vector3f v1 = new Vector3f(1, 2, 5);
-        double x = 3;
-        double y = 7;
-        double z = 8;
+        float x = 3;
+        float y = 7;
+        float z = 8;
         Vector3f v = new Vector3f(-2, -5, -3);
         Assertions.assertTrue(v.equals(v1.sub(x, y, z)));
     }
@@ -44,15 +44,15 @@ public class Vector3fTest {
     @Test
     void mul() {
         Vector3f v1 = new Vector3f(1, 2, 5);
-        double scalar = 3;
+        float scalar = 3;
         Vector3f v = new Vector3f(3, 6, 15);
         Assertions.assertTrue(v.equals(v1.mul(scalar)));
     }
 
     @Test
     void mulX() {
-        Vector3f v1 = new Vector3f(0.1, 0.2, 0.3);
-        Vector3f v2 = v1.mul(3).mul(3).add(new Vector3f(0.1, 0.2, 0.3));
+        Vector3f v1 = new Vector3f(0.1f, 0.2f, 0.3f);
+        Vector3f v2 = v1.mul(3).mul(3).add(new Vector3f(0.1f, 0.2f, 0.3f));
         Vector3f v = new Vector3f(1, 2, 3);
         Assertions.assertTrue(v.equals(v2));
     }
@@ -60,16 +60,16 @@ public class Vector3fTest {
     @Test
     void div_scalarNotEqualsZero() {
         Vector3f v1 = new Vector3f(1, 2, 5);
-        double scalar = 4;
-        Vector3f v = new Vector3f(0.25, 0.5, 1.25);
+        float scalar = 4;
+        Vector3f v = new Vector3f(0.25f, 0.5f, 1.25f);
         Assertions.assertTrue(v.equals(v1.div(scalar)));
     }
 
     @Test
     void div_scalarNotEqualsZero2() {
         Vector3f v1 = new Vector3f(1, 2, 5);
-        double scalar = -4;
-        Vector3f v = new Vector3f(-0.25, -0.5, -1.25);
+        float scalar = -4;
+        Vector3f v = new Vector3f(-0.25f, -0.5f, -1.25f);
         Assertions.assertTrue(v.equals(v1.div(scalar)));
     }
 
@@ -83,13 +83,14 @@ public class Vector3fTest {
     @Test
     void length() {
         Vector3f v1 = new Vector3f(6, 8, 3);
-        Assertions.assertEquals(Math.sqrt(36 + 64 + 9), v1.length());
+        Assertions.assertEquals((float) Math.sqrt(36 + 64 + 9), v1.length());
     }
 
     @Test
     void normalization_vectorLengthNotEqualsZero() {
         Vector3f v1 = new Vector3f(6, 8, 3);
-        Vector3f v = new Vector3f(6 / Math.sqrt(36 + 64 + 9), 8 / Math.sqrt(36 + 64 + 9), 3 / Math.sqrt(36 + 64 + 9));
+        Vector3f v = new Vector3f((float) (6 / Math.sqrt(36 + 64 + 9)), (float) (8 / Math.sqrt(36 + 64 + 9)),
+                (float) (3 / Math.sqrt(36 + 64 + 9)));
         Assertions.assertTrue(v.equals(v1.normalization()));
     }
 

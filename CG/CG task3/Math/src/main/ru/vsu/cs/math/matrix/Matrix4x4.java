@@ -3,13 +3,13 @@ package main.ru.vsu.cs.math.matrix;
 import main.ru.vsu.cs.math.vector.Vector4f;
 
 public class Matrix4x4 implements IMatrix<Matrix4x4, Vector4f> {
-    private double[][] matrix = new double[4][4];
+    private float[][] matrix = new float[4][4];
 
     public Matrix4x4(
-            double a11, double a12, double a13, double a14,
-            double a21, double a22, double a23, double a24,
-            double a31, double a32, double a33, double a34,
-            double a41, double a42, double a43, double a44) {
+            float a11, float a12, float a13, float a14,
+            float a21, float a22, float a23, float a24,
+            float a31, float a32, float a33, float a34,
+            float a41, float a42, float a43, float a44) {
         matrix[0][0] = a11;
         matrix[0][1] = a12;
         matrix[0][2] = a13;
@@ -28,7 +28,7 @@ public class Matrix4x4 implements IMatrix<Matrix4x4, Vector4f> {
         matrix[3][3] = a44;
     }
 
-    public Matrix4x4(double[] matrix) {
+    public Matrix4x4(float[] matrix) {
         if (matrix.length != 16) {
             throw new ArithmeticException("Wrong array length to create matrix. The length should be 16");
         }
@@ -50,7 +50,7 @@ public class Matrix4x4 implements IMatrix<Matrix4x4, Vector4f> {
         this.matrix[3][3] = matrix[15];
     }
 
-    public Matrix4x4(double[][] matrix) {
+    public Matrix4x4(float[][] matrix) {
         if (matrix.length != 4) {
             for (int i = 0; i < 4; i++) {
                 if (matrix[i].length != 4) {
@@ -61,14 +61,13 @@ public class Matrix4x4 implements IMatrix<Matrix4x4, Vector4f> {
         for (int i = 0; i < 4; i++) {
             System.arraycopy(matrix[i], 0, this.matrix[i], 0, 4);
         }
-        //this.matrix = matrix;
     }
 
     /*
      * Создание нулевой матрицы (все значения равны 0)
      */
     public Matrix4x4() {
-        double[] arr = new double[16];
+        float[] arr = new float[16];
         new Matrix4x4(arr);
     }
 
@@ -76,7 +75,7 @@ public class Matrix4x4 implements IMatrix<Matrix4x4, Vector4f> {
      * Получение элемента матрицы по номеру строки(i) и столбца(j)
      */
     @Override
-    public double getValue(int i, int j) {
+    public float getValue(int i, int j) {
         if (i > 3 || i < 0) {
             throw new ArithmeticException("wrong value for 'i'");
         }
@@ -90,11 +89,11 @@ public class Matrix4x4 implements IMatrix<Matrix4x4, Vector4f> {
      * Замена элемента матрицы на новый(value) по номеру строки(i) и столбца(j)
      */
     @Override
-    public void setValue(int i, int j, double value) {
+    public void setValue(int i, int j, float value) {
         matrix[i][j] = value;
     }
 
-    private double[][] getArr() {
+    private float[][] getArr() {
         return matrix;
     }
 
@@ -117,7 +116,7 @@ public class Matrix4x4 implements IMatrix<Matrix4x4, Vector4f> {
      * Создание единичной матрицы
      */
     public static Matrix4x4 identityMatrix() {
-        double[][] arr = new double[4][4];
+        float[][] arr = new float[4][4];
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 if (i == j) {
@@ -168,7 +167,7 @@ public class Matrix4x4 implements IMatrix<Matrix4x4, Vector4f> {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 for (int k = 0; k < 4; k++) {
-                    double value = arrResult.getValue(i, j);
+                    float value = arrResult.getValue(i, j);
                     value += this.getValue(i, k) * matrix.getValue(k, j);
                     arrResult.setValue(i, j, value);
                 }
@@ -184,7 +183,7 @@ public class Matrix4x4 implements IMatrix<Matrix4x4, Vector4f> {
      */
     @Override
     public Vector4f mulVector(Vector4f vector) {
-        double[][] arrResult = new double[4][1];
+        float[][] arrResult = new float[4][1];
         for (int i = 0; i < 4; i++) {
             for (int k = 0; k < 4; k++) {
                 arrResult[i][0] += this.getValue(i, k) * vector.getVector()[k][0];
@@ -197,8 +196,8 @@ public class Matrix4x4 implements IMatrix<Matrix4x4, Vector4f> {
      * Детерминант матрицы
      */
     @Override
-    public double determinantMatrix() {
-        double[][] arr = this.getArr();
+    public float determinantMatrix() {
+        float[][] arr = this.getArr();
         return Search.detMatrix(arr);
     }
 
@@ -223,17 +222,17 @@ public class Matrix4x4 implements IMatrix<Matrix4x4, Vector4f> {
      */
     @Override
     public Matrix4x4 inverseMatrix() {
-        double[][] arr = this.getArr();
-        double delta = Search.detMatrix(arr);
+        float[][] arr = this.getArr();
+        float delta = Search.detMatrix(arr);
         if (delta == 0) {
             return null;
         }
         Matrix4x4 arrTrans = this.transposition();
-        double[][] arrInverse = new double[arr.length][arr.length];
+        float[][] arrInverse = new float[arr.length][arr.length];
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr.length; j++) {
-                double[][] arrReduction = Search.matrixReduction(arrTrans.getArr(), i, j);
-                arrInverse[i][j] = Math.pow(-1, i + j) * Search.detMatrix(arrReduction) / delta;
+                float[][] arrReduction = Search.matrixReduction(arrTrans.getArr(), i, j);
+                arrInverse[i][j] = (float) Math.pow(-1, i + j) * Search.detMatrix(arrReduction) / delta;
             }
         }
         return new Matrix4x4(arrInverse);
@@ -246,7 +245,7 @@ public class Matrix4x4 implements IMatrix<Matrix4x4, Vector4f> {
      */
     @Override
     public Vector4f gaussMethod(Vector4f vector) {
-        double[][] inputArr = new double[4][5];
+        float[][] inputArr = new float[4][5];
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 inputArr[i][j] = this.getValue(i, j);
@@ -255,7 +254,7 @@ public class Matrix4x4 implements IMatrix<Matrix4x4, Vector4f> {
         for (int i = 0; i < 4; i++) {
             inputArr[i][4] = vector.getVector()[i][0];
         }
-        double[] arrOutput = SearchGaussMethod.gaussMethod(inputArr);
+        float[] arrOutput = SearchGaussMethod.gaussMethod(inputArr);
         return new Vector4f(arrOutput[0], arrOutput[1], arrOutput[2], arrOutput[3]);
     }
 }

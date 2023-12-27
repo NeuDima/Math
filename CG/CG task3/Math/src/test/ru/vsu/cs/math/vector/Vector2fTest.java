@@ -26,8 +26,8 @@ public class Vector2fTest {
     @Test
     void add_params() {
         Vector2f v1 = new Vector2f(1, 2);
-        double x = 3;
-        double y = 7;
+        float x = 3;
+        float y = 7;
         Vector2f v = new Vector2f(4, 9);
         Assertions.assertTrue(v.equals(v1.add(x, y)));
     }
@@ -43,8 +43,8 @@ public class Vector2fTest {
     @Test
     void sub_params() {
         Vector2f v1 = new Vector2f(1, 2);
-        double x = 3;
-        double y = 7;
+        float x = 3;
+        float y = 7;
         Vector2f v = new Vector2f(-2, -5);
         Assertions.assertTrue(v.equals(v1.sub(x, y)));
     }
@@ -52,15 +52,15 @@ public class Vector2fTest {
     @Test
     void mul() {
         Vector2f v1 = new Vector2f(1, 2);
-        double scalar = 3;
+        float scalar = 3;
         Vector2f v = new Vector2f(3, 6);
         Assertions.assertTrue(v.equals(v1.mul(scalar)));
     }
 
     @Test
     void mulX() {
-        Vector2f v1 = new Vector2f(0.1, 0.2);
-        Vector2f v2 = v1.mul(3).mul(3).add(new Vector2f(0.1, 0.2));
+        Vector2f v1 = new Vector2f(0.1f, 0.2f);
+        Vector2f v2 = v1.mul(3).mul(3).add(new Vector2f(0.1f, 0.2f));
         Vector2f v = new Vector2f(1, 2);
         Assertions.assertTrue(v.equals(v2));
     }
@@ -68,16 +68,16 @@ public class Vector2fTest {
     @Test
     void div_scalarNotEqualsZero() {
         Vector2f v1 = new Vector2f(6, 8);
-        double scalar = 4;
-        Vector2f v = new Vector2f(1.5, 2);
+        float scalar = 4;
+        Vector2f v = new Vector2f(1.5f, 2);
         Assertions.assertTrue(v.equals(v1.div(scalar)));
     }
 
     @Test
     void div_scalarNotEqualsZero2() {
         Vector2f v1 = new Vector2f(6, 8);
-        double scalar = -4;
-        Vector2f v = new Vector2f(-1.5, -2);
+        float scalar = -4;
+        Vector2f v = new Vector2f(-1.5f, -2);
         Assertions.assertTrue(v.equals(v1.div(scalar)));
     }
 
@@ -97,7 +97,7 @@ public class Vector2fTest {
     @Test
     void normalization_vectorLengthNotEqualsZero() {
         Vector2f v1 = new Vector2f(6, 8);
-        Vector2f v = new Vector2f(0.6, 0.8);
+        Vector2f v = new Vector2f(0.6f, 0.8f);
         Vector2f q = v1.normalization();
         Assertions.assertTrue(v.equals(q));
         Assertions.assertTrue(v1.equals(new Vector2f(6, 8)));

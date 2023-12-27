@@ -3,12 +3,12 @@ package main.ru.vsu.cs.math.matrix;
 import main.ru.vsu.cs.math.vector.Vector3f;
 
 public class Matrix3x3 implements IMatrix<Matrix3x3, Vector3f> {
-    private double[][] matrix = new double[3][3];
+    private float[][] matrix = new float[3][3];
 
     public Matrix3x3(
-            double a11, double a12, double a13,
-            double a21, double a22, double a23,
-            double a31, double a32, double a33) {
+            float a11, float a12, float a13,
+            float a21, float a22, float a23,
+            float a31, float a32, float a33) {
         matrix[0][0] = a11;
         matrix[0][1] = a12;
         matrix[0][2] = a13;
@@ -20,7 +20,7 @@ public class Matrix3x3 implements IMatrix<Matrix3x3, Vector3f> {
         matrix[2][2] = a33;
     }
 
-    public Matrix3x3(double[] matrix) {
+    public Matrix3x3(float[] matrix) {
         if (matrix.length != 9) {
             throw new ArithmeticException("Wrong array length to create matrix. The length should be 9");
         }
@@ -35,7 +35,7 @@ public class Matrix3x3 implements IMatrix<Matrix3x3, Vector3f> {
         this.matrix[2][2] = matrix[8];
     }
 
-    public Matrix3x3(double[][] matrix) {
+    public Matrix3x3(float[][] matrix) {
         if (matrix.length != 3) {
             for (int i = 0; i < 3; i++) {
                 if (matrix[i].length != 3) {
@@ -52,7 +52,7 @@ public class Matrix3x3 implements IMatrix<Matrix3x3, Vector3f> {
      * Создание нулевой матрицы (все значения равны 0)
      */
     public Matrix3x3 () {
-        double[] arr = new double[9];
+        float[] arr = new float[9];
         new Matrix3x3(arr);
     }
 
@@ -60,7 +60,7 @@ public class Matrix3x3 implements IMatrix<Matrix3x3, Vector3f> {
      * Получение элемента матрицы по номеру строки(i) и столбца(j)
      */
     @Override
-    public double getValue(int i, int j) {
+    public float getValue(int i, int j) {
         if (i > 2 || i < 0) {
             throw new ArithmeticException("wrong value for 'i'");
         }
@@ -74,11 +74,11 @@ public class Matrix3x3 implements IMatrix<Matrix3x3, Vector3f> {
      * Замена элемента матрицы на новый(value) по номеру строки(i) и столбца(j)
      */
     @Override
-    public void setValue(int i, int j, double value) {
+    public void setValue(int i, int j, float value) {
         matrix[i][j] = value;
     }
 
-    private double[][] getArr() {
+    private float[][] getArr() {
         return matrix;
     }
 
@@ -101,7 +101,7 @@ public class Matrix3x3 implements IMatrix<Matrix3x3, Vector3f> {
      * Создание единичной матрицы
      */
     public static Matrix3x3 identityMatrix() {
-        double[][] arr = new double[3][3];
+        float[][] arr = new float[3][3];
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if (i == j) {
@@ -121,7 +121,7 @@ public class Matrix3x3 implements IMatrix<Matrix3x3, Vector3f> {
         Matrix3x3 matrix3x3 = new Matrix3x3();
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                double value = this.matrix[i][j] + matrix.getValue(i, j);
+                float value = this.matrix[i][j] + matrix.getValue(i, j);
                 matrix3x3.setValue(i, j, value);
             }
         }
@@ -137,7 +137,7 @@ public class Matrix3x3 implements IMatrix<Matrix3x3, Vector3f> {
         Matrix3x3 matrix3x3 = new Matrix3x3();
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                double value = this.matrix[i][j] - matrix.getValue(i, j);
+                float value = this.matrix[i][j] - matrix.getValue(i, j);
                 matrix3x3.setValue(i, j, value);
             }
         }
@@ -155,7 +155,7 @@ public class Matrix3x3 implements IMatrix<Matrix3x3, Vector3f> {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 for (int k = 0; k < 3; k++) {
-                    double value = arrResult.getValue(i, j);
+                    float value = arrResult.getValue(i, j);
                     value += this.getValue(i, k) * matrix.getValue(k, j);
                     arrResult.setValue(i, j, value);
                 }
@@ -171,7 +171,7 @@ public class Matrix3x3 implements IMatrix<Matrix3x3, Vector3f> {
      */
     @Override
     public Vector3f mulVector(Vector3f vector) {
-        double[] arrResult = new double[3];
+        float[] arrResult = new float[3];
         for (int i = 0; i < 3; i++) {
             for (int k = 0; k < 3; k++) {
                 arrResult[i] += this.getValue(i, k) * vector.getVector()[k][0];
@@ -184,13 +184,13 @@ public class Matrix3x3 implements IMatrix<Matrix3x3, Vector3f> {
      * Детерминант матрицы
      */
     @Override
-    public double determinantMatrix() {
-        double v1 = this.getValue(0, 0) * this.getValue(1, 1) * this.getValue(2, 2);
-        double v2 = this.getValue(0, 1) * this.getValue(1, 2) * this.getValue(2, 0);
-        double v3 = this.getValue(0, 2) * this.getValue(1, 0) * this.getValue(2, 1);
-        double v4 = this.getValue(0, 2) * this.getValue(1, 1) * this.getValue(2, 0);
-        double v5 = this.getValue(0, 1) * this.getValue(1, 0) * this.getValue(2, 2);
-        double v6 = this.getValue(0, 0) * this.getValue(1, 2) * this.getValue(2, 1);
+    public float determinantMatrix() {
+        float v1 = this.getValue(0, 0) * this.getValue(1, 1) * this.getValue(2, 2);
+        float v2 = this.getValue(0, 1) * this.getValue(1, 2) * this.getValue(2, 0);
+        float v3 = this.getValue(0, 2) * this.getValue(1, 0) * this.getValue(2, 1);
+        float v4 = this.getValue(0, 2) * this.getValue(1, 1) * this.getValue(2, 0);
+        float v5 = this.getValue(0, 1) * this.getValue(1, 0) * this.getValue(2, 2);
+        float v6 = this.getValue(0, 0) * this.getValue(1, 2) * this.getValue(2, 1);
         return v1 + v2 + v3 - v4 - v5 - v6;
     }
 
@@ -215,17 +215,17 @@ public class Matrix3x3 implements IMatrix<Matrix3x3, Vector3f> {
      */
     @Override
     public Matrix3x3 inverseMatrix() {
-        double[][] arr = this.getArr();
-        double delta = this.determinantMatrix();
+        float[][] arr = this.getArr();
+        float delta = this.determinantMatrix();
         if (delta == 0) {
             return null;
         }
         Matrix3x3 arrTrans = this.transposition();
-        double[][] arrInverse = new double[arr.length][arr.length];
+        float[][] arrInverse = new float[arr.length][arr.length];
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr.length; j++) {
-                double[][] arrReduction = Search.matrixReduction(arrTrans.getArr(), i, j);
-                arrInverse[i][j] = Math.pow(-1, i + j) * Search.detMatrix(arrReduction) / delta;
+                float[][] arrReduction = Search.matrixReduction(arrTrans.getArr(), i, j);
+                arrInverse[i][j] = (float) Math.pow(-1, i + j) * Search.detMatrix(arrReduction) / delta;
             }
         }
         return new Matrix3x3(arrInverse);
@@ -238,7 +238,7 @@ public class Matrix3x3 implements IMatrix<Matrix3x3, Vector3f> {
      */
     @Override
     public Vector3f gaussMethod(Vector3f vector) {
-        double[][] inputArr = new double[3][4];
+        float[][] inputArr = new float[3][4];
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 inputArr[i][j] = this.getValue(i, j);
@@ -247,7 +247,7 @@ public class Matrix3x3 implements IMatrix<Matrix3x3, Vector3f> {
         for (int i = 0; i < 3; i++) {
             inputArr[i][3] = vector.getVector()[i][0];
         }
-        double[] arrOutput = SearchGaussMethod.gaussMethod(inputArr);
+        float[] arrOutput = SearchGaussMethod.gaussMethod(inputArr);
         return new Vector3f(arrOutput[0], arrOutput[1], arrOutput[2]);
     }
 }

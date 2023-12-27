@@ -3,9 +3,9 @@ package main.ru.vsu.cs.math.matrix;
 import main.ru.vsu.cs.math.vector.IVector;
 
 public interface IMatrix<T extends IMatrix<T, V>, V extends IVector<V>> {
-    double getValue(int i, int j);
+    float getValue(int i, int j);
 
-    void setValue(int i, int j, double value);
+    void setValue(int i, int j, float value);
 
     boolean equals(T matrix);
 
@@ -15,7 +15,7 @@ public interface IMatrix<T extends IMatrix<T, V>, V extends IVector<V>> {
 
     T mulMatrix(T matrix);
 
-    double determinantMatrix();
+    float determinantMatrix();
 
     T transposition();
 

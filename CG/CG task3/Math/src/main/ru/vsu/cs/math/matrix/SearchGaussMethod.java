@@ -3,11 +3,11 @@ package main.ru.vsu.cs.math.matrix;
 import java.util.ArrayList;
 
 public class SearchGaussMethod {
-    public static double[] gaussMethod(double[][] inputArr) {
+    public static float[] gaussMethod(float[][] inputArr) {
         for (int i = 0; i < inputArr.length - 1; i++) {
             for (int j = i; j < inputArr.length - 1; j++) {
                 if (inputArr[i][i] != 0) {
-                    double a = inputArr[j + 1][i] / inputArr[i][i];
+                    float a = inputArr[j + 1][i] / inputArr[i][i];
                     for (int k = 0; k < inputArr[0].length; k++) {
                         inputArr[j + 1][k] -= a * inputArr[i][k];
                     }
@@ -16,11 +16,11 @@ public class SearchGaussMethod {
         }
 
         ArrayList<Integer> nullLine = nullCheck(inputArr);
-        ArrayList<Double> listOut = new ArrayList<>();
+        ArrayList<Float> listOut = new ArrayList<>();
         if (nullLine.isEmpty()) {
             listOut = variableSubstitution(inputArr);
 
-            double[] arrOut = new double[inputArr.length];
+            float[] arrOut = new float[inputArr.length];
             for (int i = listOut.size() - 1; i >= 0; i--) {
                 if (Math.abs(listOut.get(i)) < 1e-14) {
                     arrOut[inputArr.length - 1 - i] = 0;
@@ -31,23 +31,23 @@ public class SearchGaussMethod {
             return arrOut;
         } else {
             inputArr = movingNullLines(inputArr, nullLine, 0);
-            double[][][] arr = solution(inputArr, nullLine.size());
+            float[][][] arr = solution(inputArr, nullLine.size());
             inputArr = arr[0];
 
-            double[] arrX = arr[1][0];
+            float[] arrX = arr[1][0];
 
-            ArrayList<Double> outInvert = variableSubstitution(inputArr);
+            ArrayList<Float> outInvert = variableSubstitution(inputArr);
 
             for (int i = 0; i < outInvert.size(); i++) {
                 listOut.add(outInvert.get(outInvert.size() - 1 - i));
             }
 
-            for (double x : arrX) {
+            for (float x : arrX) {
                 listOut.add(x);
             }
         }
 
-        double[] arrOut = new double[listOut.size()];
+        float[] arrOut = new float[listOut.size()];
         for (int i = 0; i < listOut.size(); i++) {
             if (Math.abs(listOut.get(i)) <= 1e-14) {
                 arrOut[i] = 0;
@@ -58,11 +58,11 @@ public class SearchGaussMethod {
         return arrOut;
     }
 
-    private static ArrayList<Double> variableSubstitution(double[][] inputArr) {
+    private static ArrayList<Float> variableSubstitution(float[][] inputArr) {
         int len = inputArr.length;
-        double x = inputArr[len - 1][len] / inputArr[len - 1][len - 1];
+        float x = inputArr[len - 1][len] / inputArr[len - 1][len - 1];
 
-        double[][] arr = new double[len - 1][len];
+        float[][] arr = new float[len - 1][len];
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr[i].length; j++) {
                 if (j != arr[i].length - 1) {
@@ -73,7 +73,7 @@ public class SearchGaussMethod {
             }
         }
 
-        ArrayList<Double> output = new ArrayList<>();
+        ArrayList<Float> output = new ArrayList<>();
         output.add(x);
 
         if (arr.length <= 1) {
@@ -84,13 +84,13 @@ public class SearchGaussMethod {
             return output;
         }
 
-        ArrayList<Double> outNew = variableSubstitution(arr);
+        ArrayList<Float> outNew = variableSubstitution(arr);
         output.addAll(outNew);
 
         return output;
     }
 
-    private static ArrayList<Integer> nullCheck (double[][] arr) {
+    private static ArrayList<Integer> nullCheck (float[][] arr) {
         ArrayList<Integer> out = new ArrayList<>();
         for (int i = 0; i < arr.length; i++) {
             int count = 0;
@@ -106,8 +106,8 @@ public class SearchGaussMethod {
         return out;
     }
 
-    private static double[][] movingNullLines (double[][] arr, ArrayList<Integer> nullLine, int number) {
-        double[] arrCopy = new double[arr.length + 1];
+    private static float[][] movingNullLines (float[][] arr, ArrayList<Integer> nullLine, int number) {
+        float[] arrCopy = new float[arr.length + 1];
         System.arraycopy(arr[nullLine.get(number)], 0, arrCopy, 0, arr.length + 1);
 
         if (nullLine.get(number) != arr.length - 1) {
@@ -123,9 +123,9 @@ public class SearchGaussMethod {
         return arr;
     }
 
-    private static double[][][] solution (double[][] arr, int count) {
-        double[] arrX = new double[count];
-        double[][] arrSolution = new double[arr.length][arr[0].length];
+    private static float[][][] solution (float[][] arr, int count) {
+        float[] arrX = new float[count];
+        float[][] arrSolution = new float[arr.length][arr[0].length];
 
         for (int i = 0; i < arrSolution.length; i++) {
             System.arraycopy(arr[i], 0, arrSolution[i], 0, arrSolution[0].length);
@@ -143,10 +143,10 @@ public class SearchGaussMethod {
             }
         }
 
-        double[][] arrOut  = new double[arr.length - count][arr.length + 1 - count];
+        float[][] arrOut  = new float[arr.length - count][arr.length + 1 - count];
         for (int i = 0; i < arrOut.length; i++) {
             System.arraycopy(arrSolution[i], 0, arrOut[i], 0, arrOut[0].length);
         }
-        return new double[][][]{arrOut, {arrX}};
+        return new float[][][]{arrOut, {arrX}};
     }
 }

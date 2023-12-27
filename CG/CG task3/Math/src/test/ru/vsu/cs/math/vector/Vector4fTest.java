@@ -16,10 +16,10 @@ public class Vector4fTest {
     @Test
     void add_params() {
         Vector4f v1 = new Vector4f(1, 2, 5, 4);
-        double x = 3;
-        double y = 7;
-        double z = 2;
-        double w = -9;
+        float x = 3;
+        float y = 7;
+        float z = 2;
+        float w = -9;
         Vector4f v = new Vector4f(4, 9, 7, -5);
         Assertions.assertTrue(v.equals(v1.add(x, y, z, w)));
     }
@@ -35,10 +35,10 @@ public class Vector4fTest {
     @Test
     void sub_params() {
         Vector4f v1 = new Vector4f(1, 2, 5, 4);
-        double x = 4;
-        double y = 8;
-        double z = 7;
-        double w = -1;
+        float x = 4;
+        float y = 8;
+        float z = 7;
+        float w = -1;
         Vector4f v = new Vector4f(-3, -6, -2, 5);
         Assertions.assertTrue(v.equals(v1.sub(x, y, z, w)));
     }
@@ -46,15 +46,15 @@ public class Vector4fTest {
     @Test
     void mul() {
         Vector4f v1 = new Vector4f(1, 2, 5, 4);
-        double scalar = 3;
+        float scalar = 3;
         Vector4f v = new Vector4f(3, 6, 15, 12);
         Assertions.assertTrue(v.equals(v1.mul(scalar)));
     }
 
     @Test
     void mulX() {
-        Vector4f v1 = new Vector4f(0.1, 0.2, 0.3, -0.4);
-        Vector4f v2 = v1.mul(3).mul(3).add(new Vector4f(0.1, 0.2, 0.3, -0.4));
+        Vector4f v1 = new Vector4f(0.1f, 0.2f, 0.3f, -0.4f);
+        Vector4f v2 = v1.mul(3).mul(3).add(new Vector4f(0.1f, 0.2f, 0.3f, -0.4f));
         Vector4f v = new Vector4f(1, 2, 3, -4);
         Assertions.assertTrue(v.equals(v2));
     }
@@ -62,15 +62,15 @@ public class Vector4fTest {
     @Test
     void div_scalarNotEqualsZero2() {
         Vector4f v1 = new Vector4f(1, 2, 5, 8);
-        double scalar = -4;
-        Vector4f v = new Vector4f(-0.25, -0.5, -1.25, -2);
+        float scalar = -4;
+        Vector4f v = new Vector4f(-0.25f, -0.5f, -1.25f, -2);
         Assertions.assertTrue(v.equals(v1.div(scalar)));
     }
 
     @Test
     void div_scalarNotEqualsZero() {
         Vector4f v1 = new Vector4f(3, 6, 15, 12);
-        double scalar = 3;
+        float scalar = 3;
         Vector4f v = new Vector4f(1, 2, 5, 4);
         Assertions.assertTrue(v.equals(v1.div(scalar)));
     }
@@ -85,14 +85,14 @@ public class Vector4fTest {
     @Test
     void length() {
         Vector4f v1 = new Vector4f(1, 2, 5, 4);
-        Assertions.assertEquals(Math.sqrt(1 + 4 + 25 + 16), v1.length());
+        Assertions.assertEquals((float) Math.sqrt(1 + 4 + 25 + 16), v1.length());
     }
 
     @Test
     void normalization_vectorLengthNotEqualsZero() {
         Vector4f v1 = new Vector4f(1, 2, 5, 4);
-        Vector4f v = new Vector4f(1 / Math.sqrt(1 + 4 + 25 + 16), 2 / Math.sqrt(1 + 4 + 25 + 16),
-                5 / Math.sqrt(1 + 4 + 25 + 16), 4 / Math.sqrt(1 + 4 + 25 + 16));
+        Vector4f v = new Vector4f((float) (1 / Math.sqrt(1 + 4 + 25 + 16)), (float) (2 / Math.sqrt(1 + 4 + 25 + 16)),
+                (float) (5 / Math.sqrt(1 + 4 + 25 + 16)), (float) (4 / Math.sqrt(1 + 4 + 25 + 16)));
         Assertions.assertTrue(v.equals(v1.normalization()));
     }
 

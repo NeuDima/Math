@@ -1,15 +1,15 @@
 package main.ru.vsu.cs.math.vector;
 
 public class Vector2f implements IVector<Vector2f> {
-    public double x;
-    public double y;
+    public float x;
+    public float y;
 
-    public Vector2f(double x, double y) {
+    public Vector2f(float x, float y) {
         this.x = x;
         this.y = y;
     }
 
-    public Vector2f(double[] arr) {
+    public Vector2f(float[] arr) {
         if (arr.length != 2) {
             throw new ArithmeticException("Wrong array length to create vector");
         }
@@ -21,21 +21,21 @@ public class Vector2f implements IVector<Vector2f> {
      * Получение вектора в виде массива столбца
      */
     @Override
-    public double[][] getVector() {
-        return new double[][]{{x}, {y}};
+    public float[][] getVector() {
+        return new float[][]{{x}, {y}};
     }
 
     /*
      * Получение значения "X"
      */
-    public double getX() {
+    public float getX() {
         return x;
     }
 
     /*
      * Получение значения "Y"
      */
-    public double getY() {
+    public float getY() {
         return y;
     }
 
@@ -54,7 +54,7 @@ public class Vector2f implements IVector<Vector2f> {
      * Исходный вектор не изменяется
      * Возвращается новый вектор
      */
-    public Vector2f add(double x, double y) {
+    public Vector2f add(float x, float y) {
         return new Vector2f(this.x + x, this.y + y);
     }
 
@@ -73,7 +73,7 @@ public class Vector2f implements IVector<Vector2f> {
      * Исходный вектор не изменяется
      * Возвращается новый вектор
      */
-    public Vector2f sub(double x, double y) {
+    public Vector2f sub(float x, float y) {
         return new Vector2f(this.x - x, this.y - y);
     }
 
@@ -83,9 +83,9 @@ public class Vector2f implements IVector<Vector2f> {
      * Возвращается новый вектор
      */
     @Override
-    public Vector2f mul(double scalar) {
-        double x = this.x * scalar;
-        double y = this.y * scalar;
+    public Vector2f mul(float scalar) {
+        float x = this.x * scalar;
+        float y = this.y * scalar;
         return new Vector2f(x, y);
     }
 
@@ -95,12 +95,12 @@ public class Vector2f implements IVector<Vector2f> {
      * Возвращается новый вектор
      */
     @Override
-    public Vector2f div(double scalar) {
+    public Vector2f div(float scalar) {
         if (Math.abs(scalar) < 1e-14) {
             throw new ArithmeticException("You cant divide on 0");
         }
-        double x = this.x / scalar;
-        double y = this.y / scalar;
+        float x = this.x / scalar;
+        float y = this.y / scalar;
         return new Vector2f(x, y);
     }
 
@@ -108,8 +108,8 @@ public class Vector2f implements IVector<Vector2f> {
      * Получение длины вектора
      */
     @Override
-    public double length() {
-        return Math.sqrt(x * x + y * y);
+    public float length() {
+        return (float) Math.sqrt(x * x + y * y);
     }
 
     /*
@@ -117,7 +117,7 @@ public class Vector2f implements IVector<Vector2f> {
      */
     @Override
     public Vector2f normalization() {
-        double len = this.length();
+        float len = this.length();
         if (len < 1e-14) {
             throw new ArithmeticException("This vector cannot be normalized because its length is zero");
         }
@@ -128,7 +128,7 @@ public class Vector2f implements IVector<Vector2f> {
      * Скалярное произведение векторов
      */
     @Override
-    public double dotProduct(Vector2f v) {
+    public float dotProduct(Vector2f v) {
         return this.x * v.x + this.y * v.y;
     }
 
